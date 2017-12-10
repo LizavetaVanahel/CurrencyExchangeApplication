@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <Spinner
+        android:id="@+id/spinner_to"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/exchange_direction_button" />
+
+    <EditText
+        android:id="@+id/value_to_exchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/enter_quantity_exchange"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/exchange_direction_button"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/exchange_direction_button"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/icon_arrow_right"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/result_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/value_to_exchange"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/byn_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/byn_currency"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/spinner_to"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/exchange_direction_button" />
+
+
+</RelativeLayout>

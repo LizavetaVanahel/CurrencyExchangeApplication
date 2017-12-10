@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Currency Exchange Application</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="major_currency_rate_title">Major Currencies Rate</string>
+    <string name="rate_dynamics_graphic_title">Rate Dynamics Graphic</string>
+    <string name="particular_date_rate_title">Particular Date Rate</string>
+    <string name="metals_rate_title">Metals rate</string>
+    <string name="currency_calculator_title">Currency Calculator</string>
+    <string name="favorite_currency_title">Favorite Currencies</string>
+    <string name="about_app_title">About Application</string>
+
+    <string name="select_currency">Select Currency</string>
+    <string name="enter_quantity_exchange">Please, enter quantity to exchange</string>
+    <string name="byn_currency">Belarusian ruble</string>
+    <string name="currencies">Add Favorite Currency</string>
+    <string name="result">Result</string>
+    <string name="show_graphic">show graphic</string>
+    <string name="calculate">Calculate</string>
+    <string name="currency_name">Currency Name</string>
+    <string name="rate">Rate</string>
+
+
+</resources>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Обмен валют</string>
+    <string name="select_currency">Выберите валюту</string>
+    <string name="enter_quantity_exchange">Введите количество для обмена</string>
+    <string name="byn_currency">Белорусский рубль</string>
+    <string name="currencies">Добавить в избранное</string>
+    <string name="result">Результат</string>
+    <string name="show_graphic">нарисовать график</string>
+    <string name="calculate">Вычислит    ь</string>
+    <string name="currency_name">Наименование валюты</string>
+    <string name="rate">Курс</string>
+
+    <string name="major_currency_rate_title">Курс основных валют</string>
+    <string name="rate_dynamics_graphic_title">График курса валют</string>
+    <string name="particular_date_rate_title">Курс на указанную дату</string>
+    <string name="metals_rate_title">Курс драгоценных металлов</string>
+    <string name="currency_calculator_title">Калькулятор валют</string>
+    <string name="favorite_currency_title">Избранные валюты</string>
+    <string name="about_app_title">О приложении</string>
+
+</resources>

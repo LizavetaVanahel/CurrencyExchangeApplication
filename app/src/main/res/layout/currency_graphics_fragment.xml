@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp">
+
+    <Spinner
+        android:id="@+id/graphic_period"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/combinedChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/currencies_for_graphic_spinner" />
+
+    <Spinner
+        android:id="@+id/currencies_for_graphic_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graphic_period"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

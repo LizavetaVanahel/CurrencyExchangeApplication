@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ingots_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    card_view:cardBackgroundColor="@color/cardview_light_background"
+    card_view:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/metal_name"
+            android:layout_width="151dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/metal_scale"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/metal_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
