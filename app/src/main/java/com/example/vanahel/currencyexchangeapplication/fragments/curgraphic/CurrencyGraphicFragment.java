@@ -1,13 +1,8 @@
 package com.example.vanahel.currencyexchangeapplication.fragments.curgraphic;
 
 import android.R.layout;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +20,6 @@ import com.example.vanahel.currencyexchangeapplication.common.view.CurrencyListV
 import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListDisplayer;
 import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListProvider;
 import com.example.vanahel.currencyexchangeapplication.util.graphic.GraphicDrawer;
-import com.example.vanahel.currencyexchangeapplication.util.pushnotservice.PushNotificationService;
 import com.github.mikephil.charting.charts.CombinedChart;
 
 import java.util.ArrayList;
@@ -51,15 +45,6 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
     private int periodForGraphic;
     private CurrencyListDisplayer currencyListDisplayer;
     private CurrencyGraphicPresenter currencyGraphicPresenter;
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String titleContent = intent.getStringExtra("title");
-            String descriptionContent = intent.getStringExtra("description");
-
-        }
-    };
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,15 +92,6 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity().getIntent().hasExtra("brodcastreceiver")) {
-            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver,
-                    new IntentFilter(PushNotificationService.INTENT_FILTER));
-            broadcastReceiver.onReceive(getActivity(), getActivity().getIntent());
-        }
-    }
 
     @Override
     public void showGraphic(Map<Integer, Float> rateDynamics) {
@@ -131,18 +107,29 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
     @Override
     public void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates) {
 
-        List<String> currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
-
         currencyIds = new ArrayList<>();
+        List<String> currencyNameList;
 
         for ( CurrencyAndRate currencyAndRate : currenciesAndRates ) {
             currencyIds.add(currencyAndRate.getCurrency().getCurID());
         }
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                    layout.simple_spinner_item, currencyNameList);
-            adapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
-            currenciesSpinner.setAdapter(adapter);
+
+        if (getArguments() != null) {
+            String myValue = getArguments().getString("currency");
+            currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
+            currencyNameList.add(0,myValue);
+        } else {
+            currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
+        }
+
+
+        ArrayAdapter<String> currenciesAdapter = new ArrayAdapter<>(getActivity(),
+                layout.simple_spinner_item, currencyNameList);
+
+            currenciesAdapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
+            currenciesSpinner.setAdapter(currenciesAdapter);
+
             currenciesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -156,7 +143,6 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
 
                 }
             });
-
         }
 
     }

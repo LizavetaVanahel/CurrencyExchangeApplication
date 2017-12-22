@@ -34,13 +34,13 @@ public class IngotsRatePresenter {
 
     }
 
-    public void getMetalsandIngots() {
+    public void getMetalsAndIngots() {
 
-        String currentDate = this.getCurrentDate();
+        String currentDate = getCurrentDate();
 
-        Observable<List<Ingot>> ingotsList = this.getObservableIngotsList(currentDate);
+        Observable<List<Ingot>> ingotsList = getObservableIngotsList(currentDate);
 
-        Observable<List<Metal>> metalsList = this.getObservableMetalList();
+        Observable<List<Metal>> metalsList = getObservableMetalList();
 
         Observable<MetalAndIngotListDTO> combined = Observable.zip(ingotsList, metalsList,
                 new BiFunction<List<Ingot>, List<Metal>, MetalAndIngotListDTO>() {
@@ -95,14 +95,14 @@ public class IngotsRatePresenter {
 
     private Observable<List<Ingot>> getObservableIngotsList (String currentDate){
 
-        return this.service.getIngots(currentDate)
+        return service.getIngots(currentDate)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<List<Metal>> getObservableMetalList (){
 
-        return this.service.getMetals()
+        return service.getMetals()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 

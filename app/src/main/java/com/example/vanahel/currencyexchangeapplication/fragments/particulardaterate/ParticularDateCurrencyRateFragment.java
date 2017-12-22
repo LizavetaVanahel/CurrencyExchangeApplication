@@ -26,9 +26,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.BEL;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.ENG;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.RUS;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.BEL;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.ENG;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.RUS;
 
 public class ParticularDateCurrencyRateFragment extends Fragment
         implements ParticularDateCurrencyRateView{

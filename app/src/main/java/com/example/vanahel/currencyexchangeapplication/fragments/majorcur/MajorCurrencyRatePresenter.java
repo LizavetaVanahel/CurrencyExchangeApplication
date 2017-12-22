@@ -35,7 +35,7 @@ public class MajorCurrencyRatePresenter {
     public void getMajorCurrencyAndRate (final Set<Integer> majorCurrencyIds){
 
 
-        Observable<List<Rate>> ratesList = this.getRates();
+        Observable<List<Rate>> ratesList = getRates();
 
         Observable<List<Currency>> currenciesList = getCurrencies();
 
@@ -101,7 +101,7 @@ public class MajorCurrencyRatePresenter {
             } else if (languageId.equals("ru") || languageId.equals("be")){
                 currentDate  = DateFormat.format("d MMMM, yyyy ", d.getTime());
             }
-        this.majorCurrencyRateView.showCurrentDate(currentDate);
+        majorCurrencyRateView.showCurrentDate(currentDate);
 
     }
 

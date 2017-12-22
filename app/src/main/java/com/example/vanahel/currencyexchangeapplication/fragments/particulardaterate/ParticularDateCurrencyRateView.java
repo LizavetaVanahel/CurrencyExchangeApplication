@@ -12,5 +12,4 @@ public interface ParticularDateCurrencyRateView  {
 
     void setCurrenciesList( List<Currency> currenciesList);
 
-
 }

@@ -9,9 +9,9 @@ import com.example.vanahel.currencyexchangeapplication.util.localization.Current
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.BEL;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.ENG;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.RUS;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.BEL;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.ENG;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.RUS;
 
 /**
  * Created by Liza Kaliada on 10.12.17.
@@ -78,6 +78,28 @@ public class CurrencyListDisplayer {
 
         return currencyNameAndRateValueList;
 
+    }
+
+    public CurrencyNameAndRateValue showCurrencyAndRate (CurrencyAndRate currencyAndRate){
+
+        CurrencyNameAndRateValue currencyNameAndRateValue = null;
+
+        switch (languageId){
+            case RUS:
+                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
+                        getCurrency().getCurName(), currencyAndRate.getRate());
+                break;
+            case BEL:
+                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
+                        getCurrency().getCurNameBel(), currencyAndRate.getRate());
+                break;
+            case ENG:
+                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
+                        getCurrency().getCurNameEng(), currencyAndRate.getRate());
+                break;
+        }
+
+        return currencyNameAndRateValue;
     }
 
 }

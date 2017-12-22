@@ -1,10 +1,15 @@
 package com.example.vanahel.currencyexchangeapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,37 +27,59 @@ import com.example.vanahel.currencyexchangeapplication.fragments.favoritecur.Fav
 import com.example.vanahel.currencyexchangeapplication.fragments.majorcur.MajorCurrencyRateFragment;
 import com.example.vanahel.currencyexchangeapplication.fragments.metalsrate.IngotsRateFragment;
 import com.example.vanahel.currencyexchangeapplication.fragments.particulardaterate.ParticularDateCurrencyRateFragment;
+import com.example.vanahel.currencyexchangeapplication.util.dataupdateservice.CurrencyUpdateScheduler;
+import com.example.vanahel.currencyexchangeapplication.util.pushnotservice.PushNotificationService;
 
 public class HomeActivity extends AppCompatActivity
         implements OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(layout.activity_home);
-        Toolbar toolbar = this.findViewById(id.toolbar);
-        this.setSupportActionBar(toolbar);
+        setContentView(layout.activity_home);
+        Toolbar toolbar = (Toolbar) findViewById(id.toolbar);setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = this.findViewById(id.home_activity);
+        DrawerLayout drawer = (DrawerLayout) findViewById(id.home_activity);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, string.navigation_drawer_open, string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = this.findViewById(id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        this.displayView(id.major_currency_rate);
+        displayView(id.major_currency_rate);
+
+        CurrencyUpdateScheduler.scheduleJob(this);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                String currency = intent.getStringExtra("currency");
+
+                Bundle bundle = new Bundle();
+                bundle.putString("currency", currency);
+                CurrencyGraphicFragment currencyGraphicFragment = new CurrencyGraphicFragment();
+                currencyGraphicFragment.setArguments(bundle);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(id.content_frame, currencyGraphicFragment);
+                ft.commit();
+
+            }
+        };
 
     }
 
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = this.findViewById(id.home_activity);
+        DrawerLayout drawer = (DrawerLayout) findViewById(id.home_activity);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -61,12 +88,20 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent().hasExtra("brodcastreceiver")) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                    new IntentFilter(PushNotificationService.INTENT_FILTER));
+            broadcastReceiver.onReceive(this, getIntent());
+        }
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        this.displayView(item.getItemId());
+        displayView(item.getItemId());
         return true;
     }
 
@@ -109,16 +144,18 @@ public class HomeActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(id.content_frame, fragment);
             ft.commit();
         }
 
-        if (this.getSupportActionBar() != null) {
-            this.getSupportActionBar().setTitle(title);
+
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
         }
 
-        DrawerLayout drawer = this.findViewById(id.home_activity);
+        DrawerLayout drawer = (DrawerLayout) findViewById(id.home_activity);
         drawer.closeDrawer(GravityCompat.START);
 
     }

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +21,7 @@ import com.example.vanahel.currencyexchangeapplication.R.drawable;
 import com.example.vanahel.currencyexchangeapplication.R.id;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRate;
 import com.example.vanahel.currencyexchangeapplication.common.view.CurrencyListView;
+import com.example.vanahel.currencyexchangeapplication.fragments.curcalculator.dto.StatusDTO;
 import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListDisplayer;
 import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListProvider;
 
@@ -41,13 +41,17 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
     EditText editText;
     @BindView(id.exchange_direction_button)
     Button exchangeButton;
+    @BindView(id.calculate_button)
+    Button calculateButton;
 
     private String currencyToAbb;
     private CurrencyCalculatorPresenter currencyCalculatorPresenter;
-    private int status;
     private String valueToExchange;
     private List<String> currencyAbbs;
     private CurrencyListDisplayer currencyListDisplayer;
+    private  final StatusDTO statusDTO = new StatusDTO();
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,10 +65,6 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
 
         currencyCalculatorPresenter = new CurrencyCalculatorPresenter(this);
 
-        if (resultTextView.getText() != null) {
-            currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange, status );
-        }
-
         return view;
     }
 
@@ -72,13 +72,27 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.spinnerTo.setOnItemSelectedListener(new OnItemSelectedListener() {
+        calculateButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editText.getText().toString().isEmpty()) {
+                    valueToExchange = editText.getText().toString();
+                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                } else {
+                    Toast.makeText(getActivity(), "please, enter value to exchange", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+        });
+
+        spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currencyToAbb = currencyAbbs.get(position);
                 if (!editText.getText().toString().isEmpty()) {
                     valueToExchange = editText.getText().toString();
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, status);
+//                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, status);
                 } else {
                     Toast.makeText(getActivity(), "please, enter value to exchange", Toast.LENGTH_LONG).show();
 
@@ -94,14 +108,14 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
         exchangeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (status == 0) {
+                if (statusDTO.getStatus() == 0) {
                     exchangeButton.setCompoundDrawablesWithIntrinsicBounds(drawable.icon_arrow_left, 0, 0, 0);
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, status);
-                    status = 1;
+                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                    statusDTO.setStatus(1);
                 } else {
                     exchangeButton.setCompoundDrawablesWithIntrinsicBounds(drawable.icon_arrow_right, 0, 0, 0);
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, status);
-                    status = 0;
+                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                    statusDTO.setStatus(0);
                 }
             }
 
@@ -113,6 +127,7 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
     @Override
     public void showCalculatedRate(Double result) {
         resultTextView.setText(result.toString());
+
     }
 
     @Override
@@ -136,4 +151,5 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
         adapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
         spinnerTo.setAdapter(adapter);
     }
+
 }

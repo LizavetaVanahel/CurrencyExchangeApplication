@@ -21,9 +21,12 @@ import java.util.List;
 public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
 
     private final List<CurrencyNameAndRateValue> currencyNameAndRateValueList;
+    private CurrencyDao currencyDao;
+
 
     public FavoriteRecyclerViewAdapter(List<CurrencyNameAndRateValue> currencyNameAndRateValueList) {
         this.currencyNameAndRateValueList = currencyNameAndRateValueList;
+        currencyDao = DaoManager.getInstance().getCurrencyDao();
     }
 
     @Override
@@ -56,8 +59,9 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
 
     private void delete(int position) {
         CurrencyNameAndRateValue currencyNameAndRateValue = currencyNameAndRateValueList.get(position);
-        CurrencyDao currencyDao = DaoManager.getInstance().getCurrencyDao();
         currencyDao.delete(currencyNameAndRateValue);
+        currencyNameAndRateValueList.clear();
+        currencyNameAndRateValueList.addAll(currencyDao.getCurrenciesAndRates());
         notifyDataSetChanged();
     }
 
@@ -68,8 +72,8 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
 
         private ViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(id.entity_name);
-            rate = itemView.findViewById(id.entity_rate);
+            name = (TextView) itemView.findViewById(id.entity_name);
+            rate = (TextView) itemView.findViewById(id.entity_rate);
             itemView.setOnClickListener(this);
         }
 
@@ -77,6 +81,7 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
         @Override
         public void onClick(View view) {
             delete(getAdapterPosition());
+
         }
 
 

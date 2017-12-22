@@ -40,11 +40,11 @@ public class MajorCurrencyRateFragment extends Fragment implements MajorCurrency
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(layout.major_currency_rate_fragment, container, false);
-        this.setRetainInstance(true);
+        setRetainInstance(true);
         ButterKnife.bind(this, view);
 
         LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        this.recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
@@ -53,7 +53,7 @@ public class MajorCurrencyRateFragment extends Fragment implements MajorCurrency
 
 
         CurrentLocalizationIdProvider currentLocalizationIdProvider = new CurrentLocalizationIdProvider(this.getActivity());
-        this.languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
+        languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
 
         MajorCurrencyRatePresenter majorCurrencyRatePresenter = new MajorCurrencyRatePresenter(this);
         majorCurrencyRatePresenter.getMajorCurrencyAndRate(majorCurrencyIds);

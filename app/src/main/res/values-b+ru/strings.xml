@@ -17,5 +17,8 @@
     <string name="currency_calculator_title">Калькулятор валют</string>
     <string name="favorite_currency_title">Избранные валюты</string>
     <string name="about_app_title">О приложении</string>
+    <string name="metal_name">Название</string>
+    <string name="metal_scale">Номинал</string>
+    <string name="metal_rate">Цена</string>
 
 </resources>

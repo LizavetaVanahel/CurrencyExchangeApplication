@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.vanahel.currencyexchangeapplication.R;
 import com.example.vanahel.currencyexchangeapplication.R.id;
 import com.example.vanahel.currencyexchangeapplication.R.layout;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +26,12 @@ public class AboutAppFragment extends Fragment {
         View view = inflater.inflate(layout.about_app_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.with(this.getActivity())
-                .load("http://i.imgur.com/DvpvklR.png")
-                .into(this.imageView);
+//        Picasso.with(this.getActivity())
+//                .load()
+//                .into(this.imageView);
+
+        ImageView i = (ImageView) view.findViewById(id.imageView);
+        i.setImageResource(R.drawable.about);
 
         return view;
     }

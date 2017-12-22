@@ -15,18 +15,18 @@ public class CurrencyAndRateListDTO {
     }
 
     public List<Rate> getRatesList() {
-        return this.ratesList;
+        return ratesList;
     }
 
     public List<Currency> getCurrencyList() {
-        return this.currencyList;
+        return currencyList;
     }
 
     public Map<Integer, Currency> getCurrencyMap(){
 
         Map<Integer, Currency> currenciesMap = new HashMap<>();
 
-        for ( Currency currency : this.currencyList) {
+        for ( Currency currency : currencyList) {
           currenciesMap.put(currency.getCurID(), currency);
         }
 
@@ -37,7 +37,7 @@ public class CurrencyAndRateListDTO {
 
         Map<Integer, Rate> ratesMap = new HashMap<>();
 
-        for ( Rate rate : this.ratesList) {
+        for ( Rate rate : ratesList) {
             ratesMap.put(rate.getCurID(), rate);
         }
 

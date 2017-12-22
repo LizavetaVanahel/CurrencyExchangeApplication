@@ -2,10 +2,14 @@ package com.example.vanahel.currencyexchangeapplication.util.dataupdateservice;
 
 import com.example.vanahel.currencyexchangeapplication.CurrenciesApplication;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Currency;
+import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRate;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRateListDTO;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Rate;
 import com.example.vanahel.currencyexchangeapplication.common.network.NBRBService;
+import com.example.vanahel.currencyexchangeapplication.dao.CurrencyDao;
+import com.example.vanahel.currencyexchangeapplication.dao.DaoManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +24,16 @@ import io.reactivex.schedulers.Schedulers;
 public class FavoriteCurrenciesUpdateService {
 
     private CurrenciesApplication currenciesApplication;
+    private CurrencyDao currencyDao = DaoManager.getInstance().getCurrencyDao();
+
 
     public void getFavoriteCurrencyRate (){
 
         Observable<List<Currency>> currenciesList = getCurrenciesList();
 
         Observable<List<Rate>> ratesList = getRates();
+
+        List<Integer> favoriteCurrenciesId = currencyDao.getFavoriteCurrencyIds();
 
         final Observable<CurrencyAndRateListDTO> combined = Observable.zip(currenciesList, ratesList,
                 new BiFunction<List<Currency>, List<Rate>, CurrencyAndRateListDTO>() {
@@ -49,8 +57,17 @@ public class FavoriteCurrenciesUpdateService {
                 Map<Integer, Currency> currenciesMap = currencyAndRateListDTO.getCurrencyMap();
                 Map<Integer, Rate> ratesMap = currencyAndRateListDTO.getRatesMap();
 
+                List<CurrencyAndRate> favoriteCurrencyAndRate = new ArrayList<>();
+
+                for (Map.Entry<Integer, Rate> entry : ratesMap.entrySet()) {
+                    CurrencyAndRate currencyAndRate = new CurrencyAndRate(currenciesMap.get(entry.getKey()),
+                            entry.getValue().getCurOfficialRate());
+
+                    favoriteCurrencyAndRate.add(currencyAndRate);
+                }
+
                 FavoriteCurrencyUpdateFLow favoriteCurrencyUpdateFLow = new FavoriteCurrencyUpdateFLow();
-                favoriteCurrencyUpdateFLow.runUpdateFlow(currenciesMap, ratesMap);
+                favoriteCurrencyUpdateFLow.runUpdateFlow(favoriteCurrencyAndRate);
 
             }
 

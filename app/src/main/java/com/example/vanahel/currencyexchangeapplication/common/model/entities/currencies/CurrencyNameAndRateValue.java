@@ -6,7 +6,7 @@ public class CurrencyNameAndRateValue {
     private final Double rate;
 
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
@@ -21,11 +21,11 @@ public class CurrencyNameAndRateValue {
     }
 
     public String getCurName() {
-        return this.curName;
+        return curName;
     }
 
     public Double getRate() {
-        return this.rate;
+        return rate;
     }
 
 

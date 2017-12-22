@@ -1,14 +1,13 @@
 package com.example.vanahel.currencyexchangeapplication;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.vanahel.currencyexchangeapplication.common.network.NBRBService;
 import com.example.vanahel.currencyexchangeapplication.dao.DaoManager;
 import com.example.vanahel.currencyexchangeapplication.dao.DatabaseDAO;
 import com.example.vanahel.currencyexchangeapplication.util.localization.DeviceLocalizationProvider;
 import com.example.vanahel.currencyexchangeapplication.util.network.NetworkAvailabilityProvider;
-import com.example.vanahel.currencyexchangeapplication.util.dataupdateservice.CurrencyJobCreator;
-import com.example.vanahel.currencyexchangeapplication.util.dataupdateservice.FavoriteCurrenciesUpdateService;
 
 import java.io.IOException;
 
@@ -26,15 +25,18 @@ public class CurrenciesApplication extends Application {
 
     private static NBRBService nbrbService;
     private NetworkAvailabilityProvider networkAvailabilityProvider;
+    private static Context context;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        CurrenciesApplication.context = getApplicationContext();
+
         DeviceLocalizationProvider deviceLocalizationProvider = new DeviceLocalizationProvider();
         deviceLocalizationProvider.getCurrentLanguage();
 
-        CurrencyJobCreator.scheduleJob(this);
         DaoManager.getInstance().setCurrencyDao(new DatabaseDAO(this));
 
         networkAvailabilityProvider = new NetworkAvailabilityProvider(this);
@@ -66,14 +68,14 @@ public class CurrenciesApplication extends Application {
 
         nbrbService = retrofit.create(NBRBService.class);
 
-        FavoriteCurrenciesUpdateService favoriteCurrenciesUpdateService = new FavoriteCurrenciesUpdateService();
-        favoriteCurrenciesUpdateService.getFavoriteCurrencyRate();
-
-
     }
 
     public static NBRBService getApi() {
         return nbrbService;
+    }
+
+    public static Context getAppContext() {
+        return CurrenciesApplication.context;
     }
 
 

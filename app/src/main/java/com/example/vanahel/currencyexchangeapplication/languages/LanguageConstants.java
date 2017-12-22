@@ -1,4 +1,4 @@
-package com.example.vanahel.currencyexchangeapplication.constants.language;
+package com.example.vanahel.currencyexchangeapplication.languages;
 
 public class LanguageConstants {
 

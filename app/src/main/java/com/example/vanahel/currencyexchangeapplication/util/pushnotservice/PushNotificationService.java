@@ -15,7 +15,7 @@ import com.example.vanahel.currencyexchangeapplication.R;
  * Created by Liza Kaliada on 03.12.17.
  */
 
-public class PushNotificationService {
+public class PushNotificationService  {
 
     private static final String BROADCAST_RECEIVER_INTENT = "brodcastreceiver";
     public static final String INTENT_FILTER = "INTENT_FILTER";
@@ -29,6 +29,7 @@ public class PushNotificationService {
         intent.putExtra(BROADCAST_RECEIVER_INTENT, "brodcastreceiver");
         intent.putExtra("title", title);
         intent.putExtra("description", body);
+        intent.putExtra("currency", currency);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -47,6 +48,5 @@ public class PushNotificationService {
 
         notificationManager.notify(0, notificationBuilder.build());
     }
-
 
 }

@@ -41,7 +41,7 @@ public class MajorCurrenciesRecyclerViewAdapter extends
 
     @Override
     public int getItemCount() {
-        return this.currencyNameAndRateValueList.size();
+        return currencyNameAndRateValueList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -50,8 +50,8 @@ public class MajorCurrenciesRecyclerViewAdapter extends
 
         private ViewHolder(View itemView) {
             super(itemView);
-            this.name = itemView.findViewById(id.entity_name);
-            this.rate = itemView.findViewById(id.entity_rate);
+            name = (TextView) itemView.findViewById(id.entity_name);
+            rate = (TextView) itemView.findViewById(id.entity_rate);
 
         }
     }

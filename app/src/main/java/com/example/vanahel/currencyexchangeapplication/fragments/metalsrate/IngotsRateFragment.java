@@ -22,9 +22,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.BEL;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.ENG;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.RUS;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.BEL;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.ENG;
+import static com.example.vanahel.currencyexchangeapplication.languages.LanguageConstants.RUS;
 
 public class IngotsRateFragment extends Fragment implements IngotsRateView{
 
@@ -35,18 +35,18 @@ public class IngotsRateFragment extends Fragment implements IngotsRateView{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(layout.ingots_rate_fragment, container, false);
-        this.setRetainInstance(true);
+        View view = inflater.inflate(layout.metals_rate_fragment, container, false);
+        setRetainInstance(true);
          ButterKnife.bind(this, view);
 
-            LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
-        this.recyclerView.setLayoutManager(layoutManager);
+            LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
 
             IngotsRatePresenter ingotsRatePresenter =  new IngotsRatePresenter(this);
-            ingotsRatePresenter.getMetalsandIngots();
+            ingotsRatePresenter.getMetalsAndIngots();
 
             CurrentLocalizationIdProvider currentLocalizationIdProvider = new CurrentLocalizationIdProvider(this.getActivity());
-        this.languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
+            languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
 
         return view;
 
@@ -60,7 +60,7 @@ public class IngotsRateFragment extends Fragment implements IngotsRateView{
 
 
         for (MetalAndIngot metalAndIngot : metalsAndIngots) {
-            switch (this.languageId) {
+            switch (languageId) {
                 case RUS:
                     metalNameAndIngotValue = new MetalNameAndIngotValue(metalAndIngot.getMetal().getName(),
                             metalAndIngot.getNominal(), metalAndIngot.getPrice());
@@ -80,7 +80,7 @@ public class IngotsRateFragment extends Fragment implements IngotsRateView{
             }
 
             Adapter adapter = new IngotsRecyclerViewAdapter(metalNameAndIngotValueList);
-            this.recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
 
         }
     }

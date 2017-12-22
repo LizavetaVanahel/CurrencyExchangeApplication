@@ -25,7 +25,7 @@ public class Rate {
     private Double curOfficialRate;
 
     public Integer getCurID() {
-        return this.curID;
+        return curID;
     }
 
     public void setCurID(Integer curID) {
@@ -33,7 +33,7 @@ public class Rate {
     }
 
     public String getDate() {
-        return this.date;
+        return date;
     }
 
     public void setDate(String date) {
@@ -41,7 +41,7 @@ public class Rate {
     }
 
     public String getCurAbbreviation() {
-        return this.curAbbreviation;
+        return curAbbreviation;
     }
 
     public void setCurAbbreviation(String curAbbreviation) {

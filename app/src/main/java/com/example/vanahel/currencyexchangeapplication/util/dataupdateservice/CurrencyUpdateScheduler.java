@@ -11,30 +11,39 @@ import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 
 /**
- * Created by Liza Kaliada on 02.12.17.
+ * Created by Liza Kaliada on 12.12.17.
  */
 
-public class CurrencyJobCreator {
+public class CurrencyUpdateScheduler  {
 
     public static void scheduleJob(Context context) {
+        //creating new firebase job dispatcher
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        //creating new job and adding it with dispatcher
         Job job = createJob(dispatcher);
         dispatcher.mustSchedule(job);
     }
 
     public static Job createJob(FirebaseJobDispatcher dispatcher){
 
-        ExecutionWindowCalculator executionWindowCalculator = new ExecutionWindowCalculator();
-        long timeInMillis = executionWindowCalculator.calculateExecutionWindow(12);
-
         Job job = dispatcher.newJobBuilder()
+                //persist the task across boots
                 .setLifetime(Lifetime.FOREVER)
+                //.setLifetime(Lifetime.UNTIL_NEXT_BOOT)
+                //call this service when the criteria are met.
                 .setService(CurrencyJobService.class)
-                .setTag("CurrencyJob")
+                //unique id of the task
+                .setTag("UniqueTagForYourJob")
+                //don't overwrite an existing job with the same tag
                 .setReplaceCurrent(false)
+                // We are mentioning that the job is periodic.
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow((int) timeInMillis, (int) timeInMillis + 60))
+                // Run between 30 - 60 seconds from now.
+                .setTrigger(Trigger.executionWindow(10, 20))
+                // retry with exponential backoff
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
+                //.setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                //Run this job only when the network is available.
                 .setConstraints(Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING)
                 .build();
         return job;
@@ -42,9 +51,12 @@ public class CurrencyJobCreator {
 
     public static Job updateJob(FirebaseJobDispatcher dispatcher) {
         Job newJob = dispatcher.newJobBuilder()
+                //update if any task with the given tag exists.
                 .setReplaceCurrent(true)
+                //Integrate the job you want to start.
                 .setService(CurrencyJobService.class)
-                .setTag("CurrencyJob")
+                .setTag("UniqueTagForYourJob")
+                // Run between 30 - 60 seconds from now.
                 .setTrigger(Trigger.executionWindow(30, 60))
                 .build();
         return newJob;
@@ -53,8 +65,10 @@ public class CurrencyJobCreator {
     public void cancelJob(Context context){
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        //Cancel all the jobs for this package
         dispatcher.cancelAll();
-        dispatcher.cancel("CurrencyJob");
+        // Cancel the job for this tag
+        dispatcher.cancel("UniqueTagForYourJob");
 
     }
 }

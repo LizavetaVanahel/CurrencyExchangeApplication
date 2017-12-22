@@ -49,9 +49,9 @@ public class IngotsRecyclerViewAdapter extends Adapter<ViewHolder> {
 
         private ViewHolder(View itemView) {
             super(itemView);
-            this.name = itemView.findViewById(id.metal_name);
-            this.rate = itemView.findViewById(id.metal_rate);
-            this.nominal = itemView.findViewById(id.metal_scale);
+            this.name = (TextView) itemView.findViewById(id.metal_name);
+            this.rate = (TextView) itemView.findViewById(id.metal_rate);
+            this.nominal = (TextView) itemView.findViewById(id.metal_scale);
         }
     }
 }

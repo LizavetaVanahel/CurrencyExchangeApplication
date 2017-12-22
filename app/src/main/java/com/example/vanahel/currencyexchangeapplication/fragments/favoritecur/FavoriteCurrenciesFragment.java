@@ -1,6 +1,5 @@
 package com.example.vanahel.currencyexchangeapplication.fragments.favoritecur;
 
-import android.R.layout;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,8 +23,8 @@ import com.example.vanahel.currencyexchangeapplication.common.model.entities.cur
 import com.example.vanahel.currencyexchangeapplication.common.view.CurrencyListView;
 import com.example.vanahel.currencyexchangeapplication.dao.CurrencyDao;
 import com.example.vanahel.currencyexchangeapplication.dao.DaoManager;
+import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListDisplayer;
 import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListProvider;
-import com.example.vanahel.currencyexchangeapplication.util.localization.CurrentLocalizationIdProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,22 +32,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.BEL;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.ENG;
-import static com.example.vanahel.currencyexchangeapplication.constants.language.LanguageConstants.RUS;
-
 public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurrenciesView, CurrencyListView {
 
     @BindView(id.home_recycler_view)
     RecyclerView recyclerView;
 
     private  ArrayAdapter<String> arrayAdapter;
-    private String languageId;
     private List<Integer> currencyIdList;
     private Integer curId;
     private FavoriteCurrenciesPresenter favoriteCurrenciesPresenter;
     private CurrencyDao currencyDao;
     private AsyncTaskLoaderCallbacks asyncTaskLoaderCallbacks;
+    private CurrencyListDisplayer currencyListDisplayer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +55,8 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
 
         CurrencyListProvider currencyListProvider = new CurrencyListProvider(this);
         currencyListProvider.getCurrencies();
+
+        currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
         favoriteCurrenciesPresenter = new FavoriteCurrenciesPresenter(this);
 
@@ -73,11 +70,7 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
         recyclerView.setAdapter(adapter);
 
         asyncTaskLoaderCallbacks = new AsyncTaskLoaderCallbacks(getActivity(),
-                currencyDao, adapter, favoriteCurrenciesPresenter);
-
-        CurrentLocalizationIdProvider currentLocalizationIdProvider =
-                new CurrentLocalizationIdProvider(getActivity());
-        languageId = currentLocalizationIdProvider.provideCurrentLocalizationId();
+                currencyDao, adapter);
 
         return view;
 
@@ -127,22 +120,8 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
 
         getLoaderManager().restartLoader(0, null, asyncTaskLoaderCallbacks).forceLoad();
 
-
-        CurrencyNameAndRateValue currencyNameAndRateValue = null;
-        switch (languageId){
-            case RUS:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurName(),
-                        currencyAndRate.getRate());
-                break;
-            case BEL:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurNameBel(),
-                        currencyAndRate.getRate());
-                break;
-            case ENG:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurNameEng(),
-                        currencyAndRate.getRate());
-                break;
-        }
+        CurrencyNameAndRateValue currencyNameAndRateValue =
+                currencyListDisplayer.showCurrencyAndRate(currencyAndRate);
 
         currencyNameAndRateValue.setId(currencyAndRate.getId());
         currencyDao.save(currencyNameAndRateValue);
@@ -153,22 +132,20 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
     public void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates) {
 
         arrayAdapter = new ArrayAdapter<>(getActivity(),
-                layout.select_dialog_singlechoice);
-        currencyIdList = new ArrayList<>();
-        for ( CurrencyAndRate currency : currenciesAndRates ) {
-            switch (languageId) {
-                case RUS:
-                    arrayAdapter.add(currency.getCurrency().getCurName());
-                    break;
-                case BEL:
-                    arrayAdapter.add(currency.getCurrency().getCurNameBel());
-                    break;
-                case ENG:
-                    arrayAdapter.add(currency.getCurrency().getCurNameEng());
-                    break;
-            }
+                android.R.layout.select_dialog_singlechoice);
 
-            currencyIdList.add(currency.getCurrency().getCurID());
+        currencyIdList = new ArrayList<>();
+
+        List<String> currencyNames = currencyListDisplayer.showCurrencyList(currenciesAndRates);
+
+        for ( String currencyName : currencyNames ) {
+            arrayAdapter.add(currencyName);
         }
+
+        for ( CurrencyAndRate currency : currenciesAndRates ) {
+            currencyIdList.add(currency.getCurrency().getCurID());
+
+        }
+
     }
 }

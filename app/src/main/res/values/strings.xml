@@ -21,6 +21,9 @@
     <string name="calculate">Calculate</string>
     <string name="currency_name">Currency Name</string>
     <string name="rate">Rate</string>
+    <string name="metal_name">Metal Name</string>
+    <string name="metal_scale">Scale</string>
+    <string name="metal_rate">Rate</string>
 
 
 </resources>
