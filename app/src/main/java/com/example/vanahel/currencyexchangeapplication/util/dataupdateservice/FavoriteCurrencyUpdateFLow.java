@@ -1,7 +1,5 @@
 package com.example.vanahel.currencyexchangeapplication.util.dataupdateservice;
 
-import android.content.Context;
-
 import com.example.vanahel.currencyexchangeapplication.CurrenciesApplication;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Currency;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRate;
@@ -9,6 +7,7 @@ import com.example.vanahel.currencyexchangeapplication.common.model.entities.cur
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Rate;
 import com.example.vanahel.currencyexchangeapplication.dao.CurrencyDao;
 import com.example.vanahel.currencyexchangeapplication.dao.DaoManager;
+import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListDisplayer;
 import com.example.vanahel.currencyexchangeapplication.util.localization.CurrentLocalizationIdProvider;
 import com.example.vanahel.currencyexchangeapplication.util.pushnotservice.PushNotificationService;
 
@@ -26,9 +25,8 @@ import static com.example.vanahel.currencyexchangeapplication.languages.Language
 
 public class FavoriteCurrencyUpdateFLow {
 
-    private Context context;
     private CurrencyDao currencyDao = DaoManager.getInstance().getCurrencyDao();
-
+    private CurrencyListDisplayer currencyListDisplayer = new CurrencyListDisplayer(CurrenciesApplication.getAppContext());
 
     public void runUpdateFlow (List<CurrencyAndRate> favoriteCurrencyAndRate){
 
@@ -46,8 +44,9 @@ public class FavoriteCurrencyUpdateFLow {
         for ( CurrencyAndRate currencyAndRate : favoriteCurrencyAndRate ) {
             for ( Double beforeUpdateRate : favoriteRatesBeforeUpdate ) {
                 if (currencyAndRate.getRate() < beforeUpdateRate) {
+                    CurrencyNameAndRateValue currencyNameAndRateValue = currencyListDisplayer.showCurrencyAndRate(currencyAndRate);
                     pushNotificationService.sendNotification(CurrenciesApplication.getAppContext(),
-                                    currencyAndRate.getCurrency().getCurName(), currencyAndRate.getRate() );
+                            currencyNameAndRateValue.getCurName(), currencyNameAndRateValue.getRate());
                 }
             }
 
@@ -77,7 +76,7 @@ public class FavoriteCurrencyUpdateFLow {
 
         List<CurrencyAndRate> currenciesAndRates = new ArrayList<>();
         CurrentLocalizationIdProvider currentLocalizationIdProvider =
-                new CurrentLocalizationIdProvider(context);
+                new CurrentLocalizationIdProvider(CurrenciesApplication.getAppContext());
         String languageId = currentLocalizationIdProvider.provideCurrentLocalizationId();
 
 

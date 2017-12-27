@@ -92,7 +92,6 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
                 currencyToAbb = currencyAbbs.get(position);
                 if (!editText.getText().toString().isEmpty()) {
                     valueToExchange = editText.getText().toString();
-//                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, status);
                 } else {
                     Toast.makeText(getActivity(), "please, enter value to exchange", Toast.LENGTH_LONG).show();
 

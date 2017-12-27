@@ -23,14 +23,14 @@ public class LocalizationIdProvider {
 
         try {
             inputStream = assetManager.open("supportedLanguages.properties");
-            this.properties.load(inputStream);
+            properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String rusId = this.properties.getProperty("Rus");
-        String engId = this.properties.getProperty("Eng");
-        String belId = this.properties.getProperty("Bel");
+        String rusId = properties.getProperty("Rus");
+        String engId = properties.getProperty("Eng");
+        String belId = properties.getProperty("Bel");
 
         supportedLanguageIds.add(rusId);
         supportedLanguageIds.add(engId);

@@ -75,7 +75,7 @@ public class CurrencyGraphicPresenter {
         Calendar c = new GregorianCalendar();
         c.setTime(new Date());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-d", Locale.US);
-        c.add(Calendar.MONTH, -monthes);
+        c.add(Calendar.MONTH, -monthes +1);
 
         return sdf.format(c.getTime());
 

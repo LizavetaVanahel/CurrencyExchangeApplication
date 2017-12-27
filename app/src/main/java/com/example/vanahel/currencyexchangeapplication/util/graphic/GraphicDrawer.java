@@ -93,7 +93,7 @@ public class GraphicDrawer {
     private BarData generateBarData(Map<Integer, Float> rateDynamics) {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries = getBarEnteries(entries, rateDynamics);
+        entries = getBarEntries(entries, rateDynamics);
 
         BarDataSet set1 = new BarDataSet(entries, "");
         set1.setColors(ColorTemplate.LIBERTY_COLORS);
@@ -121,7 +121,7 @@ public class GraphicDrawer {
         return entries;
     }
 
-    private ArrayList<BarEntry> getBarEnteries(ArrayList<BarEntry> entries, Map<Integer, Float> rateDynamics) {
+    private ArrayList<BarEntry> getBarEntries(ArrayList<BarEntry> entries, Map<Integer, Float> rateDynamics) {
 
         for (Map.Entry<Integer, Float> rateDynamic : rateDynamics.entrySet())
         {

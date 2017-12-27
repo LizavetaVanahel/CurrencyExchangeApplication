@@ -33,7 +33,7 @@ public class FavoriteCurrenciesUpdateService {
 
         Observable<List<Rate>> ratesList = getRates();
 
-        List<Integer> favoriteCurrenciesId = currencyDao.getFavoriteCurrencyIds();
+        final List<Integer> favoriteCurrenciesId = currencyDao.getFavoriteCurrencyIds();
 
         final Observable<CurrencyAndRateListDTO> combined = Observable.zip(currenciesList, ratesList,
                 new BiFunction<List<Currency>, List<Rate>, CurrencyAndRateListDTO>() {
@@ -56,15 +56,26 @@ public class FavoriteCurrenciesUpdateService {
             public void onNext(@NonNull CurrencyAndRateListDTO currencyAndRateListDTO) {
                 Map<Integer, Currency> currenciesMap = currencyAndRateListDTO.getCurrencyMap();
                 Map<Integer, Rate> ratesMap = currencyAndRateListDTO.getRatesMap();
+                CurrencyAndRate currencyAndRate = null;
 
                 List<CurrencyAndRate> favoriteCurrencyAndRate = new ArrayList<>();
 
-                for (Map.Entry<Integer, Rate> entry : ratesMap.entrySet()) {
-                    CurrencyAndRate currencyAndRate = new CurrencyAndRate(currenciesMap.get(entry.getKey()),
-                            entry.getValue().getCurOfficialRate());
+                for ( int favoriteId : favoriteCurrenciesId ) {
+                    currencyAndRate= new CurrencyAndRate(currenciesMap.get(favoriteId),
+                            ratesMap.get(favoriteId).getCurOfficialRate());
 
                     favoriteCurrencyAndRate.add(currencyAndRate);
                 }
+
+//                for (Map.Entry<Integer, Rate> entry : ratesMap.entrySet()) {
+//                    for ( int favoriteId : favoriteCurrenciesId ) {
+//                        if (favoriteId == entry.getKey()){
+//                            currencyAndRate= new CurrencyAndRate(currenciesMap.get(entry.getKey()),
+//                                    entry.getValue().getCurOfficialRate());
+//                        }
+//                    }
+//
+//                }
 
                 FavoriteCurrencyUpdateFLow favoriteCurrencyUpdateFLow = new FavoriteCurrencyUpdateFLow();
                 favoriteCurrencyUpdateFLow.runUpdateFlow(favoriteCurrencyAndRate);

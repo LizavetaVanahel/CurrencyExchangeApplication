@@ -17,9 +17,7 @@ import com.firebase.jobdispatcher.Trigger;
 public class CurrencyUpdateScheduler  {
 
     public static void scheduleJob(Context context) {
-        //creating new firebase job dispatcher
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
-        //creating new job and adding it with dispatcher
         Job job = createJob(dispatcher);
         dispatcher.mustSchedule(job);
     }
@@ -27,23 +25,13 @@ public class CurrencyUpdateScheduler  {
     public static Job createJob(FirebaseJobDispatcher dispatcher){
 
         Job job = dispatcher.newJobBuilder()
-                //persist the task across boots
                 .setLifetime(Lifetime.FOREVER)
-                //.setLifetime(Lifetime.UNTIL_NEXT_BOOT)
-                //call this service when the criteria are met.
                 .setService(CurrencyJobService.class)
-                //unique id of the task
-                .setTag("UniqueTagForYourJob")
-                //don't overwrite an existing job with the same tag
+                .setTag("CurrencyAppTag")
                 .setReplaceCurrent(false)
-                // We are mentioning that the job is periodic.
                 .setRecurring(true)
-                // Run between 30 - 60 seconds from now.
                 .setTrigger(Trigger.executionWindow(10, 20))
-                // retry with exponential backoff
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
-                //.setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
-                //Run this job only when the network is available.
                 .setConstraints(Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING)
                 .build();
         return job;
