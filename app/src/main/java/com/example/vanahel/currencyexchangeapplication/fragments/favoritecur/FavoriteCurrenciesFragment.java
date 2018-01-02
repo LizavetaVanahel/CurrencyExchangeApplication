@@ -39,7 +39,7 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
 
     private  ArrayAdapter<String> arrayAdapter;
     private List<Integer> currencyIdList;
-    private Integer curId;
+    private int curId;
     private FavoriteCurrenciesPresenter favoriteCurrenciesPresenter;
     private CurrencyDao currencyDao;
     private AsyncTaskLoaderCallbacks asyncTaskLoaderCallbacks;
@@ -47,14 +47,14 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.favorite_currencies_fragment, container, false);
+        View view = inflater.inflate( R.layout.favorite_currencies_fragment, container, false );
         ButterKnife.bind(this, view);
 
         setRetainInstance(true);
         setHasOptionsMenu(true);
 
         CurrencyListProvider currencyListProvider = new CurrencyListProvider(this);
-        currencyListProvider.getCurrencies();
+        currencyListProvider.provideCurrencyList();
 
         currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
@@ -77,15 +77,8 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.favorite_menu, menu);
+    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater ) {
+        inflater.inflate( R.menu.favorite_menu, menu );
     }
 
     @Override
@@ -94,7 +87,7 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
         if(id == R.id.menu_new_content_facebook){
 
             Builder builderSingle = new Builder(getActivity());
-            builderSingle.setAdapter(this.arrayAdapter, new DialogInterface.OnClickListener() {
+            builderSingle.setAdapter( arrayAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     curId = currencyIdList.get(which);
@@ -111,25 +104,20 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
     }
 
     @Override
-    public void showError(String error) {
+    public void showSelectedCurrencyAndRate( CurrencyAndRate currencyAndRate ) {
 
-    }
-
-    @Override
-    public void showSelectedCurrencyAndRate(CurrencyAndRate currencyAndRate) {
-
-        getLoaderManager().restartLoader(0, null, asyncTaskLoaderCallbacks).forceLoad();
+        getLoaderManager().restartLoader( 0, null, asyncTaskLoaderCallbacks ).forceLoad();
 
         CurrencyNameAndRateValue currencyNameAndRateValue =
                 currencyListDisplayer.showCurrencyAndRate(currencyAndRate);
 
-        currencyNameAndRateValue.setId(currencyAndRate.getId());
+        currencyNameAndRateValue.setId( currencyAndRate.getId() );
         currencyDao.save(currencyNameAndRateValue);
 
     }
 
     @Override
-    public void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates) {
+    public void showCurrencyAndRate( List<CurrencyAndRate> currenciesAndRates ) {
 
         arrayAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.select_dialog_singlechoice);
@@ -143,9 +131,8 @@ public class FavoriteCurrenciesFragment extends Fragment implements FavoriteCurr
         }
 
         for ( CurrencyAndRate currency : currenciesAndRates ) {
-            currencyIdList.add(currency.getCurrency().getCurID());
+            currencyIdList.add( currency.getCurrency().getCurID() );
 
         }
-
     }
 }

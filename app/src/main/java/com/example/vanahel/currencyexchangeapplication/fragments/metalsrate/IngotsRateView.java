@@ -8,5 +8,4 @@ public interface IngotsRateView {
 
     void showMetalsRate( List<MetalAndIngot> metalsAndIngots );
 
-    void showError(String error);
 }

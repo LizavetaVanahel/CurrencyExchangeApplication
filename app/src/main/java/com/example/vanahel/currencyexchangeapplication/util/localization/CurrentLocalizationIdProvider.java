@@ -20,16 +20,14 @@ public class CurrentLocalizationIdProvider {
         String currentLanguage = deviceLocalizationProvider.getCurrentLanguage();
 
         LocalizationIdProvider localizationIdProvider = new LocalizationIdProvider();
-        Set<String> currentLanguageIds = localizationIdProvider.getLocalizationId(this.context);
+        Set<String> currentLanguageIds = localizationIdProvider.getLocalizationId(context);
 
         for ( String id : currentLanguageIds ) {
-            if (currentLanguage.equals(id)){
+            if ( currentLanguage.equals(id) ){
                 currentId = id;
             }
         }
 
         return  currentId;
     }
-
-
 }

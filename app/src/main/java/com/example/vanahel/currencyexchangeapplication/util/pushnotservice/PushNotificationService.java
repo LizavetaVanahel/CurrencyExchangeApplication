@@ -20,7 +20,7 @@ public class PushNotificationService  {
     private static final String BROADCAST_RECEIVER_INTENT = "brodcastreceiver";
     public static final String INTENT_FILTER = "INTENT_FILTER";
 
-    public void sendNotification(Context context, String currency, Double priceFallRate) {
+    public void sendNotification( Context context, String currency, Double priceFallRate ) {
 
         String title = currency + " has fallen in price";
         String body = currency + " was down " + priceFallRate + " dollar";
@@ -32,7 +32,7 @@ public class PushNotificationService  {
         intent.putExtra("currency", currency);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent =
-                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.getActivity( context, 0, intent, PendingIntent.FLAG_ONE_SHOT );
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)

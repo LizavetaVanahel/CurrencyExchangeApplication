@@ -13,17 +13,9 @@ public class CurrencyJobService extends JobService {
     private FavoriteCurrenciesUpdateService favoriteCurrenciesUpdateService;
 
     @Override
-    public boolean onStartJob(final JobParameters params) {
+    public boolean onStartJob( final JobParameters params ) {
         favoriteCurrenciesUpdateService = new FavoriteCurrenciesUpdateService();
         favoriteCurrenciesUpdateService.getFavoriteCurrencyRate();
-        //Offloading work to a new thread.
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                codeYouWantToRun(params);
-//            }
-//        }).start();
-
         return true;
     }
 

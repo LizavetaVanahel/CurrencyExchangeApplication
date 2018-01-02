@@ -3,21 +3,21 @@ package com.example.vanahel.currencyexchangeapplication.common.model.entities.cu
 public class CurrencyAndRate {
 
     private final Currency currency;
-    private final Double rate;
+    private final double rate;
 
-    public CurrencyAndRate (Currency currency, Double rate){
+    public CurrencyAndRate (Currency currency, double rate){
         this.currency = currency;
         this.rate = rate;
     }
 
     public Currency getCurrency() {
-        return this.currency;
+        return currency;
     }
 
-    public Double getRate() {
-        return this.rate;
+    public double getRate() {
+        return rate;
     }
 
-    public Integer getId () { return this.currency.getCurID(); }
+    public int getId () { return currency.getCurID(); }
 
 }

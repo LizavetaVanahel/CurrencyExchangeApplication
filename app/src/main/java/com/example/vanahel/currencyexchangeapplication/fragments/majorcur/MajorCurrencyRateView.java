@@ -6,9 +6,8 @@ import java.util.List;
 
 public interface MajorCurrencyRateView {
 
-    void showCurrentDate (CharSequence currentDate);
+    void showCurrentDate ( CharSequence currentDate );
 
-    void showCurrencyAndRate (List<CurrencyAndRate> currenciesAndRates);
+    void showCurrencyAndRate ( List<CurrencyAndRate> currenciesAndRates );
 
-    void showError(String error);
 }

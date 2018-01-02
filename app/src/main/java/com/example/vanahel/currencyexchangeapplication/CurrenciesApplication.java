@@ -32,7 +32,7 @@ public class CurrenciesApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        CurrenciesApplication.context = getApplicationContext();
+        context = getApplicationContext();
 
         DeviceLocalizationProvider deviceLocalizationProvider = new DeviceLocalizationProvider();
         deviceLocalizationProvider.getCurrentLanguage();
@@ -75,7 +75,7 @@ public class CurrenciesApplication extends Application {
     }
 
     public static Context getAppContext() {
-        return CurrenciesApplication.context;
+        return context;
     }
 
 

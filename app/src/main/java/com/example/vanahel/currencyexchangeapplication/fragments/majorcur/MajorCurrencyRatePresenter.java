@@ -26,19 +26,17 @@ import io.reactivex.schedulers.Schedulers;
 public class MajorCurrencyRatePresenter {
 
     private final MajorCurrencyRateView majorCurrencyRateView;
+    private  NBRBService service;
 
-    public MajorCurrencyRatePresenter (MajorCurrencyRateView majorCurrencyRateView){
+    public MajorCurrencyRatePresenter ( MajorCurrencyRateView majorCurrencyRateView ){
         this.majorCurrencyRateView = majorCurrencyRateView;
-
+        service = CurrenciesApplication.getApi();
     }
 
-    public void getMajorCurrencyAndRate (final Set<Integer> majorCurrencyIds){
-
+    public void getMajorCurrencyAndRate ( final Set<Integer> majorCurrencyIds ){
 
         Observable<List<Rate>> ratesList = getRates();
-
         Observable<List<Currency>> currenciesList = getCurrencies();
-
         Observable<CurrencyAndRateListDTO> combined = Observable.zip(ratesList, currenciesList,
                 new BiFunction<List<Rate>, List<Currency>, CurrencyAndRateListDTO>() {
                     @Override
@@ -60,9 +58,9 @@ public class MajorCurrencyRatePresenter {
 
                 List<CurrencyAndRate> currenciesAndRates = new ArrayList<>();
 
-                for ( Integer majorCurrencyId : majorCurrencyIds ) {
-                    CurrencyAndRate currencyAndRate = new CurrencyAndRate(currenciesMap.get(majorCurrencyId),
-                            ratesMap.get(majorCurrencyId).getCurOfficialRate());
+                for ( int majorCurrencyId : majorCurrencyIds ) {
+                    CurrencyAndRate currencyAndRate = new CurrencyAndRate( currenciesMap.get(majorCurrencyId),
+                            ratesMap.get(majorCurrencyId).getCurOfficialRate() );
                     currenciesAndRates.add(currencyAndRate);
                 }
 
@@ -85,8 +83,6 @@ public class MajorCurrencyRatePresenter {
     }
 
     private Observable<List<Rate>> getRates (){
-
-        NBRBService service = CurrenciesApplication.getApi();
         return service.getRatesForToday()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -106,8 +102,6 @@ public class MajorCurrencyRatePresenter {
     }
 
     public Observable<List<Currency>> getCurrencies() {
-        NBRBService service = CurrenciesApplication.getApi();
-
         return service.getCurrencies()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());

@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 public class Currency {
         @SerializedName("Cur_ID")
         @Expose
-        private Integer curID;
+        private int curID;
         @SerializedName("Cur_ParentID")
         @Expose
-        private Integer curParentID;
+        private int curParentID;
         @SerializedName("Cur_Code")
         @Expose
         private String curCode;
@@ -45,10 +45,10 @@ public class Currency {
         private String curNameEngMulti;
         @SerializedName("Cur_Scale")
         @Expose
-        private Integer curScale;
+        private int curScale;
         @SerializedName("Cur_Periodicity")
         @Expose
-        private Integer curPeriodicity;
+        private int curPeriodicity;
         @SerializedName("Cur_DateStart")
         @Expose
         private String curDateStart;
@@ -56,24 +56,24 @@ public class Currency {
         @Expose
         private String curDateEnd;
 
-        public Integer getCurID() {
-            return this.curID;
+        public int getCurID() {
+            return curID;
         }
 
-        public void setCurID(Integer curID) {
+        public void setCurID(int curID) {
             this.curID = curID;
         }
 
-        public Integer getCurParentID() {
-            return this.curParentID;
+        public int getCurParentID() {
+            return curParentID;
         }
 
-        public void setCurParentID(Integer curParentID) {
+        public void setCurParentID(int curParentID) {
             this.curParentID = curParentID;
         }
 
         public String getCurCode() {
-            return this.curCode;
+            return curCode;
         }
 
         public void setCurCode(String curCode) {
@@ -81,7 +81,7 @@ public class Currency {
         }
 
         public String getCurAbbreviation() {
-            return this.curAbbreviation;
+            return curAbbreviation;
         }
 
         public void setCurAbbreviation(String curAbbreviation) {
@@ -89,7 +89,7 @@ public class Currency {
         }
 
         public String getCurName() {
-            return this.curName;
+            return curName;
         }
 
         public void setCurName(String curName) {
@@ -97,7 +97,7 @@ public class Currency {
         }
 
         public String getCurNameBel() {
-            return this.curNameBel;
+            return curNameBel;
         }
 
         public void setCurNameBel(String curNameBel) {
@@ -105,7 +105,7 @@ public class Currency {
         }
 
         public String getCurNameEng() {
-            return this.curNameEng;
+            return curNameEng;
         }
 
         public void setCurNameEng(String curNameEng) {
@@ -113,7 +113,7 @@ public class Currency {
         }
 
         public String getCurQuotName() {
-            return this.curQuotName;
+            return curQuotName;
         }
 
         public void setCurQuotName(String curQuotName) {
@@ -121,7 +121,7 @@ public class Currency {
         }
 
         public String getCurQuotNameBel() {
-            return this.curQuotNameBel;
+            return curQuotNameBel;
         }
 
         public void setCurQuotNameBel(String curQuotNameBel) {
@@ -129,7 +129,7 @@ public class Currency {
         }
 
         public String getCurQuotNameEng() {
-            return this.curQuotNameEng;
+            return curQuotNameEng;
         }
 
         public void setCurQuotNameEng(String curQuotNameEng) {
@@ -137,7 +137,7 @@ public class Currency {
         }
 
         public String getCurNameMulti() {
-            return this.curNameMulti;
+            return curNameMulti;
         }
 
         public void setCurNameMulti(String curNameMulti) {
@@ -145,7 +145,7 @@ public class Currency {
         }
 
         public String getCurNameBelMulti() {
-            return this.curNameBelMulti;
+            return curNameBelMulti;
         }
 
         public void setCurNameBelMulti(String curNameBelMulti) {
@@ -153,31 +153,31 @@ public class Currency {
         }
 
         public String getCurNameEngMulti() {
-            return this.curNameEngMulti;
+            return curNameEngMulti;
         }
 
         public void setCurNameEngMulti(String curNameEngMulti) {
             this.curNameEngMulti = curNameEngMulti;
         }
 
-        public Integer getCurScale() {
-            return this.curScale;
+        public int getCurScale() {
+            return curScale;
         }
 
-        public void setCurScale(Integer curScale) {
+        public void setCurScale(int curScale) {
             this.curScale = curScale;
         }
 
-        public Integer getCurPeriodicity() {
-            return this.curPeriodicity;
+        public int getCurPeriodicity() {
+            return curPeriodicity;
         }
 
-        public void setCurPeriodicity(Integer curPeriodicity) {
+        public void setCurPeriodicity(int curPeriodicity) {
             this.curPeriodicity = curPeriodicity;
         }
 
         public String getCurDateStart() {
-            return this.curDateStart;
+            return curDateStart;
         }
 
         public void setCurDateStart(String curDateStart) {
@@ -185,7 +185,7 @@ public class Currency {
         }
 
         public String getCurDateEnd() {
-            return this.curDateEnd;
+            return curDateEnd;
         }
 
         public void setCurDateEnd(String curDateEnd) {

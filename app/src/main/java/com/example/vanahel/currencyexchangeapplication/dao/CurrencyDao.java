@@ -6,14 +6,16 @@ import java.util.List;
 
 public interface CurrencyDao {
 
-    void save(CurrencyNameAndRateValue currencyNameAndRateValue);
+    void save( CurrencyNameAndRateValue currencyNameAndRateValue );
 
     List<CurrencyNameAndRateValue> getCurrenciesAndRates();
 
-    void delete(CurrencyNameAndRateValue currencyNameAndRateValue);
+    void delete( CurrencyNameAndRateValue currencyNameAndRateValue );
 
     List<Integer> getFavoriteCurrencyIds();
 
     List<Double> getRates();
+
+    void deleteAll();
 
 }

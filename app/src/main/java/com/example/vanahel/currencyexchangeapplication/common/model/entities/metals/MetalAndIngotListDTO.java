@@ -10,17 +10,17 @@ public class MetalAndIngotListDTO {
     private final List<Metal> metalList;
     private final List<Ingot> ingotsList;
 
-    public MetalAndIngotListDTO(List<Ingot> ingotsList, List<Metal> metalsList ){
+    public MetalAndIngotListDTO( List<Ingot> ingotsList, List<Metal> metalsList ){
         metalList = metalsList;
         this.ingotsList = ingotsList;
     }
 
     public List<Metal> getMetalList() {
-        return this.metalList;
+        return metalList;
     }
 
     public List<Ingot> getIngotsList() {
-        return this.ingotsList;
+        return ingotsList;
     }
 
 
@@ -28,7 +28,7 @@ public class MetalAndIngotListDTO {
 
         Map<Integer, Metal> metalsMap = new HashMap<>();
 
-        for ( Metal metal : this.metalList) {
+        for ( Metal metal : metalList ) {
             metalsMap.put(metal.getId(), metal);
         }
 
@@ -39,7 +39,7 @@ public class MetalAndIngotListDTO {
 
         Map<Integer, Ingot> ingotsMap = new HashMap<>();
 
-        for ( Ingot ingot : this.ingotsList) {
+        for ( Ingot ingot : ingotsList ) {
             ingotsMap.put(ingot.getMetalID(), ingot);
         }
 

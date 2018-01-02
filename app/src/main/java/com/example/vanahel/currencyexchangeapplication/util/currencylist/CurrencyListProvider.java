@@ -22,12 +22,19 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CurrencyListProvider {
 
+    private NBRBService service;
+    private CurrencyListView currencyListView;
 
     public CurrencyListProvider (final CurrencyListView currencyListView){
+        service = CurrenciesApplication.getApi();
+        this.currencyListView = currencyListView;
+    }
+
+    public void provideCurrencyList () {
 
         Observable<List<Currency>> currenciesList = getCurrencies();
 
-        Observable<List<Rate>> ratesList = this.getRates();
+        Observable<List<Rate>> ratesList = getRates();
 
         Observable<CurrencyAndRateListDTO> combined = Observable.zip(currenciesList, ratesList,
                 new BiFunction<List<Currency>, List<Rate>, CurrencyAndRateListDTO>() {
@@ -72,21 +79,17 @@ public class CurrencyListProvider {
 
             }
         });
-
     }
 
 
-    public Observable<List<Currency>> getCurrencies() {
-        NBRBService service = CurrenciesApplication.getApi();
 
+    public Observable<List<Currency>> getCurrencies() {
        return service.getCurrencies()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<List<Rate>> getRates (){
-
-        NBRBService service = CurrenciesApplication.getApi();
         return service.getRatesForToday()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());

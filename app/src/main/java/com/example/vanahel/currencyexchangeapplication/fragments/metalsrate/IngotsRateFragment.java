@@ -34,46 +34,46 @@ public class IngotsRateFragment extends Fragment implements IngotsRateView{
     private String languageId;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(layout.metals_rate_fragment, container, false);
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+        View view = inflater.inflate( layout.metals_rate_fragment, container, false );
         setRetainInstance(true);
-         ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
 
-            LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(layoutManager);
+        LayoutManager layoutManager = new LinearLayoutManager( getActivity() );
+        recyclerView.setLayoutManager(layoutManager);
 
-            IngotsRatePresenter ingotsRatePresenter =  new IngotsRatePresenter(this);
-            ingotsRatePresenter.getMetalsAndIngots();
+        IngotsRatePresenter ingotsRatePresenter =  new IngotsRatePresenter(this);
+        ingotsRatePresenter.getMetalsAndIngots();
 
-            CurrentLocalizationIdProvider currentLocalizationIdProvider = new CurrentLocalizationIdProvider(this.getActivity());
-            languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
+        CurrentLocalizationIdProvider currentLocalizationIdProvider =
+                new CurrentLocalizationIdProvider( getActivity() );
+        languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
 
         return view;
 
     }
 
     @Override
-    public void showMetalsRate( List<MetalAndIngot> metalsAndIngots) {
+    public void showMetalsRate( List<MetalAndIngot> metalsAndIngots ) {
 
         MetalNameAndIngotValue metalNameAndIngotValue;
         List<MetalNameAndIngotValue> metalNameAndIngotValueList = new ArrayList<>();
 
-
-        for (MetalAndIngot metalAndIngot : metalsAndIngots) {
+        for ( MetalAndIngot metalAndIngot : metalsAndIngots ) {
             switch (languageId) {
                 case RUS:
-                    metalNameAndIngotValue = new MetalNameAndIngotValue(metalAndIngot.getMetal().getName(),
-                            metalAndIngot.getNominal(), metalAndIngot.getPrice());
+                    metalNameAndIngotValue = new MetalNameAndIngotValue( metalAndIngot.getMetal().getName(),
+                            metalAndIngot.getNominal(), metalAndIngot.getPrice() );
                     metalNameAndIngotValueList.add(metalNameAndIngotValue);
                     break;
                 case BEL:
-                    metalNameAndIngotValue = new MetalNameAndIngotValue(metalAndIngot.getMetal().getNameBel(),
-                            metalAndIngot.getNominal(), metalAndIngot.getPrice());
+                    metalNameAndIngotValue = new MetalNameAndIngotValue( metalAndIngot.getMetal().getNameBel(),
+                            metalAndIngot.getNominal(), metalAndIngot.getPrice() );
                     metalNameAndIngotValueList.add(metalNameAndIngotValue);
                     break;
                 case ENG:
-                    metalNameAndIngotValue = new MetalNameAndIngotValue(metalAndIngot.getMetal().getNameEng(),
-                            metalAndIngot.getNominal(), metalAndIngot.getPrice());
+                    metalNameAndIngotValue = new MetalNameAndIngotValue( metalAndIngot.getMetal().getNameEng(),
+                            metalAndIngot.getNominal(), metalAndIngot.getPrice() );
                     metalNameAndIngotValueList.add(metalNameAndIngotValue);
                     break;
 
@@ -83,10 +83,5 @@ public class IngotsRateFragment extends Fragment implements IngotsRateView{
             recyclerView.setAdapter(adapter);
 
         }
-    }
-
-    @Override
-    public void showError(String error) {
-
     }
 }

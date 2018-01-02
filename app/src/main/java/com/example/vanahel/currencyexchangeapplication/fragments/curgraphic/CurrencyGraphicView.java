@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface CurrencyGraphicView {
 
-    void showGraphic(Map<Integer, Float> rateDynamics);
+    void showGraphic( Map<Integer, Float> rateDynamics );
 
-    void showError (String error);
+    void showError ( String error );
 
 }

@@ -25,7 +25,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MajorCurrencyRateFragment extends Fragment implements MajorCurrencyRateView{
+public class  MajorCurrencyRateFragment extends Fragment implements MajorCurrencyRateView{
 
     @BindView(id.date)
     TextView date;
@@ -35,24 +35,22 @@ public class MajorCurrencyRateFragment extends Fragment implements MajorCurrency
     private String languageId;
     private CurrencyListDisplayer currencyListDisplayer;
 
-    public MajorCurrencyRateFragment() {}
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(layout.major_currency_rate_fragment, container, false);
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+        View view = inflater.inflate( layout.major_currency_rate_fragment, container, false );
         setRetainInstance(true);
         ButterKnife.bind(this, view);
 
-        LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
         MajorCurrencyIdProvider majorCurrencyIdProvider = new MajorCurrencyIdProvider();
-        Set<Integer> majorCurrencyIds = majorCurrencyIdProvider.provideMajorCurrenciesId(this.getActivity());
+        Set<Integer> majorCurrencyIds = majorCurrencyIdProvider.provideMajorCurrenciesId(getActivity());
 
-
-        CurrentLocalizationIdProvider currentLocalizationIdProvider = new CurrentLocalizationIdProvider(this.getActivity());
+        CurrentLocalizationIdProvider currentLocalizationIdProvider =
+                new CurrentLocalizationIdProvider(getActivity());
         languageId =  currentLocalizationIdProvider.provideCurrentLocalizationId();
 
         MajorCurrencyRatePresenter majorCurrencyRatePresenter = new MajorCurrencyRatePresenter(this);
@@ -72,36 +70,7 @@ public class MajorCurrencyRateFragment extends Fragment implements MajorCurrency
         List<CurrencyNameAndRateValue> currencyNameAndRateValueList =
                 currencyListDisplayer.showCurrencyAndRateList(currenciesAndRates);
 
-//        for ( CurrencyAndRate currencyAndRate : currenciesAndRates ) {
-//            switch (this.languageId) {
-//                case RUS:
-//                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurName(),
-//                            currencyAndRate.getRate());
-//                    break;
-//                case BEL:
-//                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurNameBel(),
-//                            currencyAndRate.getRate());
-//                    break;
-//                case ENG:
-//                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.getCurrency().getCurNameEng(),
-//                            currencyAndRate.getRate());
-//                    break;
-//
-//            }
-//
-//                currencyNameAndRateValueList.add(currencyNameAndRateValue);
-//
-//
-//        }
-
-
         Adapter adapter = new MajorCurrenciesRecyclerViewAdapter(currencyNameAndRateValueList);
         recyclerView.setAdapter(adapter);
-    }
-
-
-    @Override
-    public void showError(String error) {
-
     }
 }

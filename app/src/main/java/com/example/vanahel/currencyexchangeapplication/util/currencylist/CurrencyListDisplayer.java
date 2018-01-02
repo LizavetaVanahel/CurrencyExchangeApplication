@@ -22,80 +22,78 @@ public class CurrencyListDisplayer {
     private CurrentLocalizationIdProvider currentLocalizationIdProvider;
     private String languageId;
 
-    public CurrencyListDisplayer(Context context) {
+    public CurrencyListDisplayer( Context context ) {
         currentLocalizationIdProvider = new CurrentLocalizationIdProvider(context);
         languageId = currentLocalizationIdProvider.provideCurrentLocalizationId();
     }
 
-    public List<String>  showCurrencyList(List<CurrencyAndRate> currenciesAndRates) {
+    public List<String>  showCurrencyList( List<CurrencyAndRate> currenciesAndRates ) {
 
         List<String> currencyNameList = new ArrayList<>();
-
-        for (CurrencyAndRate currency : currenciesAndRates) {
+        for ( CurrencyAndRate currency : currenciesAndRates ) {
             switch (languageId) {
                 case RUS:
-                    currencyNameList.add(currency.getCurrency().getCurName());
+                    currencyNameList.add( currency.getCurrency().getCurName() );
                     break;
                 case BEL:
-                    currencyNameList.add(currency.getCurrency().getCurNameBel());
+                    currencyNameList.add( currency.getCurrency().getCurNameBel() );
                     break;
                 case ENG:
-                    currencyNameList.add(currency.getCurrency().getCurNameEng());
+                    currencyNameList.add( currency.getCurrency().getCurNameEng() );
                     break;
             }
 
         }
 
         return currencyNameList;
-
     }
 
 
-    public List<CurrencyNameAndRateValue> showCurrencyAndRateList(List<CurrencyAndRate> currenciesAndRates) {
+    public List<CurrencyNameAndRateValue> showCurrencyAndRateList( List<CurrencyAndRate> currenciesAndRates ) {
 
         CurrencyNameAndRateValue currencyNameAndRateValue = null;
         List<CurrencyNameAndRateValue> currencyNameAndRateValueList = new ArrayList<>();
 
-        for (CurrencyAndRate currencyAndRate : currenciesAndRates) {
-            switch (this.languageId) {
+        for ( CurrencyAndRate currencyAndRate : currenciesAndRates ) {
+            switch (languageId) {
                 case RUS:
-                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                            getCurrency().getCurName(), currencyAndRate.getRate());
+                    currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                            getCurrency().getCurName(), currencyAndRate.getRate() );
                     break;
                 case BEL:
-                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                            getCurrency().getCurNameBel(), currencyAndRate.getRate());
+                    currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                            getCurrency().getCurNameBel(), currencyAndRate.getRate() );
                     break;
                 case ENG:
-                    currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                            getCurrency().getCurNameEng(), currencyAndRate.getRate());
+                    currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                            getCurrency().getCurNameEng(), currencyAndRate.getRate() );
                     break;
 
             }
 
-            currencyNameAndRateValueList.add(currencyNameAndRateValue);
+            currencyNameAndRateValueList.add( currencyNameAndRateValue );
         }
 
         return currencyNameAndRateValueList;
 
     }
 
-    public CurrencyNameAndRateValue showCurrencyAndRate (CurrencyAndRate currencyAndRate){
+    public CurrencyNameAndRateValue showCurrencyAndRate ( CurrencyAndRate currencyAndRate ){
 
         CurrencyNameAndRateValue currencyNameAndRateValue = null;
 
         switch (languageId){
             case RUS:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                        getCurrency().getCurName(), currencyAndRate.getRate());
+                currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                        getCurrency().getCurName(), currencyAndRate.getRate() );
                 break;
             case BEL:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                        getCurrency().getCurNameBel(), currencyAndRate.getRate());
+                currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                        getCurrency().getCurNameBel(), currencyAndRate.getRate() );
                 break;
             case ENG:
-                currencyNameAndRateValue = new CurrencyNameAndRateValue(currencyAndRate.
-                        getCurrency().getCurNameEng(), currencyAndRate.getRate());
+                currencyNameAndRateValue = new CurrencyNameAndRateValue( currencyAndRate.
+                        getCurrency().getCurNameEng(), currencyAndRate.getRate() );
                 break;
         }
 

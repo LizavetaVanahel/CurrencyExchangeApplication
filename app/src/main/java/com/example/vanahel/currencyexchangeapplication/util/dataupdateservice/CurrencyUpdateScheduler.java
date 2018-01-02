@@ -37,26 +37,11 @@ public class CurrencyUpdateScheduler  {
         return job;
     }
 
-    public static Job updateJob(FirebaseJobDispatcher dispatcher) {
-        Job newJob = dispatcher.newJobBuilder()
-                //update if any task with the given tag exists.
-                .setReplaceCurrent(true)
-                //Integrate the job you want to start.
-                .setService(CurrencyJobService.class)
-                .setTag("UniqueTagForYourJob")
-                // Run between 30 - 60 seconds from now.
-                .setTrigger(Trigger.executionWindow(30, 60))
-                .build();
-        return newJob;
-    }
-
     public void cancelJob(Context context){
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
-        //Cancel all the jobs for this package
         dispatcher.cancelAll();
-        // Cancel the job for this tag
-        dispatcher.cancel("UniqueTagForYourJob");
+        dispatcher.cancel("CurrencyAppTag");
 
     }
 }

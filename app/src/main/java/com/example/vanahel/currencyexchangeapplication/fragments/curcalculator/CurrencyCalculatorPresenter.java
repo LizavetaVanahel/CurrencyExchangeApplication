@@ -14,11 +14,11 @@ public class CurrencyCalculatorPresenter {
 
     private final CurrencyCalculatorView currencyCalculatorView;
 
-    public CurrencyCalculatorPresenter (CurrencyCalculatorView currencyCalculatorView){
+    public CurrencyCalculatorPresenter ( CurrencyCalculatorView currencyCalculatorView ){
         this.currencyCalculatorView = currencyCalculatorView;
     }
 
-    public void getRateByAbb(String curAbb, final String valueToExchange, final int status){
+    public void getRateByAbb( String curAbb, final String valueToExchange, final int status ){
 
         NBRBService service = CurrenciesApplication.getApi();
         service.getRateByAbbreviation(curAbb)
@@ -33,11 +33,13 @@ public class CurrencyCalculatorPresenter {
                     @Override
                     public void onNext(@NonNull Rate rate) {
                         double doubleValueToExchange = Double.parseDouble(valueToExchange);
-                        Double calculatedResult;
+                        double calculatedResult;
                         if (status == 0){
-                            calculatedResult  = calculateFromBel(rate.getCurOfficialRate(), doubleValueToExchange);
+                            calculatedResult  = calculateFromBel( rate.getCurOfficialRate(),
+                                    doubleValueToExchange );
                         } else {
-                            calculatedResult = calculateToBel(rate.getCurOfficialRate(), doubleValueToExchange);
+                            calculatedResult = calculateToBel( rate.getCurOfficialRate(),
+                                    doubleValueToExchange );
                         }
                         currencyCalculatorView.showCalculatedRate(calculatedResult);
 
@@ -57,13 +59,11 @@ public class CurrencyCalculatorPresenter {
     }
 
 
-    private Double calculateFromBel (Double currencyToRate, Double valueToExchange ){
-
+    private double calculateFromBel ( double currencyToRate, double valueToExchange ){
         return currencyToRate * valueToExchange;
     }
 
-    private Double calculateToBel(Double currencyToRate, Double valueToExchange ){
-
+    private double calculateToBel( double currencyToRate, double valueToExchange ){
         return currencyToRate / valueToExchange;
     }
 

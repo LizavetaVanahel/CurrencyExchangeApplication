@@ -24,24 +24,23 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
     private CurrencyDao currencyDao;
 
 
-    public FavoriteRecyclerViewAdapter(List<CurrencyNameAndRateValue> currencyNameAndRateValueList) {
+    public FavoriteRecyclerViewAdapter( List<CurrencyNameAndRateValue> currencyNameAndRateValueList ) {
         this.currencyNameAndRateValueList = currencyNameAndRateValueList;
         currencyDao = DaoManager.getInstance().getCurrencyDao();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(layout.list_item, viewGroup, false);
+    public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i ) {
+        View v = LayoutInflater.from( viewGroup.getContext() ).inflate( layout.list_item, viewGroup, false );
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder( ViewHolder viewHolder, int i ) {
 
         CurrencyNameAndRateValue currencyNameAndRateValue = currencyNameAndRateValueList.get(i);
-
-        viewHolder.name.setText(currencyNameAndRateValue.getCurName());
-        viewHolder.rate.setText(currencyNameAndRateValue.getRate().toString());
+        viewHolder.name.setText( currencyNameAndRateValue.getCurName() );
+        viewHolder.rate.setText( Double.valueOf(currencyNameAndRateValue.getRate()).toString() );
 
     }
 
@@ -50,18 +49,18 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
         return currencyNameAndRateValueList.size();
     }
 
-    public void setTask(List<CurrencyNameAndRateValue> data) {
+    public void setTask( List<CurrencyNameAndRateValue> data ) {
         currencyNameAndRateValueList.clear();
         currencyNameAndRateValueList.addAll(data);
         notifyDataSetChanged();
     }
 
 
-    private void delete(int position) {
+    private void delete( int position ) {
         CurrencyNameAndRateValue currencyNameAndRateValue = currencyNameAndRateValueList.get(position);
-        currencyDao.delete(currencyNameAndRateValue);
+        currencyDao.delete( currencyNameAndRateValue );
         currencyNameAndRateValueList.clear();
-        currencyNameAndRateValueList.addAll(currencyDao.getCurrenciesAndRates());
+        currencyNameAndRateValueList.addAll( currencyDao.getCurrenciesAndRates() );
         notifyDataSetChanged();
     }
 
@@ -77,13 +76,10 @@ public class FavoriteRecyclerViewAdapter extends Adapter<ViewHolder> {
             itemView.setOnClickListener(this);
         }
 
-
         @Override
         public void onClick(View view) {
             delete(getAdapterPosition());
 
         }
-
-
     }
 }

@@ -9,7 +9,7 @@ public class StatusDTO {
     private int status;
 
     public int getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setStatus(int status) {

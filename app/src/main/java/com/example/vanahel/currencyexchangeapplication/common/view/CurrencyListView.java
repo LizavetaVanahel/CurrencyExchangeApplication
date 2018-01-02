@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface CurrencyListView {
 
-    void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates );
+    void showCurrencyAndRate( List<CurrencyAndRate> currenciesAndRates );
 
 }

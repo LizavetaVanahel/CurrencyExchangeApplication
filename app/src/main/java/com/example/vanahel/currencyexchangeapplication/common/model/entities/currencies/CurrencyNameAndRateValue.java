@@ -3,19 +3,10 @@ package com.example.vanahel.currencyexchangeapplication.common.model.entities.cu
 public class CurrencyNameAndRateValue {
 
     private final String curName;
-    private final Double rate;
+    private final double rate;
+    private int id;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    private Integer id;
-
-    public CurrencyNameAndRateValue(String curName, Double rate){
+    public CurrencyNameAndRateValue( String curName, double rate ){
         this.curName = curName;
         this.rate = rate;
     }
@@ -24,9 +15,18 @@ public class CurrencyNameAndRateValue {
         return curName;
     }
 
-    public Double getRate() {
+    public double getRate() {
         return rate;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
 
 }

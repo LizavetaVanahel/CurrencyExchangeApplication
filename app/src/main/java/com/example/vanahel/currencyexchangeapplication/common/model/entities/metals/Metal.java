@@ -7,7 +7,7 @@ public class Metal {
 
     @SerializedName("Id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("Name")
     @Expose
     private String name;
@@ -18,16 +18,16 @@ public class Metal {
     @Expose
     private String nameEng;
 
-    public Integer getId() {
-        return this.id;
+    public int getId() {
+        return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -35,7 +35,7 @@ public class Metal {
     }
 
     public String getNameBel() {
-        return this.nameBel;
+        return nameBel;
     }
 
     public void setNameBel(String nameBel) {
@@ -43,7 +43,7 @@ public class Metal {
     }
 
     public String getNameEng() {
-        return this.nameEng;
+        return nameEng;
     }
 
     public void setNameEng(String nameEng) {

@@ -14,28 +14,26 @@ import com.example.vanahel.currencyexchangeapplication.fragments.majorcur.MajorC
 
 import java.util.List;
 
-public class MajorCurrenciesRecyclerViewAdapter extends
-        Adapter<ViewHolder> {
+public class MajorCurrenciesRecyclerViewAdapter extends Adapter<ViewHolder> {
 
     private final List<CurrencyNameAndRateValue> currencyNameAndRateValueList;
 
-    public MajorCurrenciesRecyclerViewAdapter(List<CurrencyNameAndRateValue> currencyNameAndRateValueList) {
+    public MajorCurrenciesRecyclerViewAdapter( List<CurrencyNameAndRateValue> currencyNameAndRateValueList ) {
         this.currencyNameAndRateValueList = currencyNameAndRateValueList;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(layout.list_item, viewGroup, false);
+    public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i ) {
+        View v = LayoutInflater.from( viewGroup.getContext() ).inflate( layout.list_item, viewGroup, false );
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder( ViewHolder viewHolder, int i ) {
 
-        CurrencyNameAndRateValue currencyNameAndRateValue = this.currencyNameAndRateValueList.get(i);
-
-            viewHolder.name.setText(currencyNameAndRateValue.getCurName());
-            viewHolder.rate.setText(currencyNameAndRateValue.getRate().toString());
+        CurrencyNameAndRateValue currencyNameAndRateValue = currencyNameAndRateValueList.get(i);
+        viewHolder.name.setText( currencyNameAndRateValue.getCurName() );
+        viewHolder.rate.setText( Double.valueOf(currencyNameAndRateValue.getRate()).toString() );
     }
 
 

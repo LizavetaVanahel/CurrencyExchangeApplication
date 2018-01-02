@@ -12,7 +12,7 @@ public class CurrencyAsyncTaskLoader extends AsyncTaskLoader<AsyncTaskResult<Lis
 
     private CurrencyDao currencyDao;
 
-    public CurrencyAsyncTaskLoader(Context context, CurrencyDao currencyDao) {
+    public CurrencyAsyncTaskLoader( Context context, CurrencyDao currencyDao ) {
         super(context);
         this.currencyDao = currencyDao;
     }
@@ -22,8 +22,8 @@ public class CurrencyAsyncTaskLoader extends AsyncTaskLoader<AsyncTaskResult<Lis
     public AsyncTaskResult<List<CurrencyNameAndRateValue>> loadInBackground() {
         AsyncTaskResult<List<CurrencyNameAndRateValue>> resultWrapper = new AsyncTaskResult<>();
         try {
-            resultWrapper.setResult(currencyDao.getCurrenciesAndRates());
-        } catch (RuntimeException error) {
+            resultWrapper.setResult( currencyDao.getCurrenciesAndRates() );
+        } catch ( RuntimeException error ) {
             resultWrapper.setError(error);
         }
 

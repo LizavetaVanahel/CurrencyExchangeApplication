@@ -7,7 +7,7 @@ public class Rate {
 
     @SerializedName("Cur_ID")
     @Expose
-    private Integer curID;
+    private int curID;
     @SerializedName("Date")
     @Expose
     private String date;
@@ -16,19 +16,19 @@ public class Rate {
     private String curAbbreviation;
     @SerializedName("Cur_Scale")
     @Expose
-    private Integer curScale;
+    private int curScale;
     @SerializedName("Cur_Name")
     @Expose
     private String curName;
     @SerializedName("Cur_OfficialRate")
     @Expose
-    private Double curOfficialRate;
+    private double curOfficialRate;
 
-    public Integer getCurID() {
+    public int getCurID() {
         return curID;
     }
 
-    public void setCurID(Integer curID) {
+    public void setCurID(int curID) {
         this.curID = curID;
     }
 
@@ -48,27 +48,27 @@ public class Rate {
         this.curAbbreviation = curAbbreviation;
     }
 
-    public Integer getCurScale() {
-        return this.curScale;
+    public int getCurScale() {
+        return curScale;
     }
 
-    public void setCurScale(Integer curScale) {
+    public void setCurScale(int curScale) {
         this.curScale = curScale;
     }
 
     public String getCurName() {
-        return this.curName;
+        return curName;
     }
 
     public void setCurName(String curName) {
         this.curName = curName;
     }
 
-    public Double getCurOfficialRate() {
-        return this.curOfficialRate;
+    public double getCurOfficialRate() {
+        return curOfficialRate;
     }
 
-    public void setCurOfficialRate(Double curOfficialRate) {
+    public void setCurOfficialRate(double curOfficialRate) {
         this.curOfficialRate = curOfficialRate;
     }
 

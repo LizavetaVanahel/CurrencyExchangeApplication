@@ -13,13 +13,13 @@ public class DaoManager {
     }
 
     public CurrencyDao getCurrencyDao() {
-        if (null == currencyDao) {
+        if ( null == currencyDao ) {
             throw new NullPointerException("DAOManager: currencyDao object wasn't initialized");
         }
         return currencyDao;
     }
 
-    public void setCurrencyDao(CurrencyDao taskDAO) {
+    public void setCurrencyDao( CurrencyDao taskDAO ) {
         currencyDao = taskDAO;
     }
 }

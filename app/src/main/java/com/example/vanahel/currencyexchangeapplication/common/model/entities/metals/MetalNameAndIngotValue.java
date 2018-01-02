@@ -3,24 +3,24 @@ package com.example.vanahel.currencyexchangeapplication.common.model.entities.me
 public class MetalNameAndIngotValue {
 
     private final String metalName;
-    private final Double nominal;
-    private final Double price;
+    private final double nominal;
+    private final double price;
 
-    public MetalNameAndIngotValue(String metalName, Double nominal, Double price ) {
+    public MetalNameAndIngotValue( String metalName, double nominal, double price ) {
         this.metalName = metalName;
         this.nominal = nominal;
         this.price = price;
     }
 
     public String getMetalName() {
-        return this.metalName;
+        return metalName;
     }
 
-    public Double getNominal() {
-        return this.nominal;
+    public double getNominal() {
+        return nominal;
     }
 
-    public Double getPrice() {
-        return this.price;
+    public double getPrice() {
+        return price;
     }
 }

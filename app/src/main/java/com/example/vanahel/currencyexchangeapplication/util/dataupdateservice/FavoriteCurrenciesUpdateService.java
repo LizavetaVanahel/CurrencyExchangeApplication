@@ -4,10 +4,12 @@ import com.example.vanahel.currencyexchangeapplication.CurrenciesApplication;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Currency;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRate;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRateListDTO;
+import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyNameAndRateValue;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.Rate;
 import com.example.vanahel.currencyexchangeapplication.common.network.NBRBService;
 import com.example.vanahel.currencyexchangeapplication.dao.CurrencyDao;
 import com.example.vanahel.currencyexchangeapplication.dao.DaoManager;
+import com.example.vanahel.currencyexchangeapplication.util.currencylist.CurrencyListDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +25,17 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FavoriteCurrenciesUpdateService {
 
-    private CurrenciesApplication currenciesApplication;
     private CurrencyDao currencyDao = DaoManager.getInstance().getCurrencyDao();
+    private NBRBService service;
 
+    public FavoriteCurrenciesUpdateService (){
+        service = CurrenciesApplication.getApi();
+    }
 
     public void getFavoriteCurrencyRate (){
 
         Observable<List<Currency>> currenciesList = getCurrenciesList();
-
         Observable<List<Rate>> ratesList = getRates();
-
         final List<Integer> favoriteCurrenciesId = currencyDao.getFavoriteCurrencyIds();
 
         final Observable<CurrencyAndRateListDTO> combined = Observable.zip(currenciesList, ratesList,
@@ -57,25 +60,20 @@ public class FavoriteCurrenciesUpdateService {
                 Map<Integer, Currency> currenciesMap = currencyAndRateListDTO.getCurrencyMap();
                 Map<Integer, Rate> ratesMap = currencyAndRateListDTO.getRatesMap();
                 CurrencyAndRate currencyAndRate = null;
+                CurrencyListDisplayer currencyListDisplayer =
+                        new CurrencyListDisplayer( CurrenciesApplication.getAppContext() );
 
-                List<CurrencyAndRate> favoriteCurrencyAndRate = new ArrayList<>();
+                List<CurrencyNameAndRateValue> favoriteCurrencyAndRate = new ArrayList<>();
 
-                for ( int favoriteId : favoriteCurrenciesId ) {
-                    currencyAndRate= new CurrencyAndRate(currenciesMap.get(favoriteId),
-                            ratesMap.get(favoriteId).getCurOfficialRate());
+                    for ( int favoriteId : favoriteCurrenciesId ) {
+                        currencyAndRate = new CurrencyAndRate(currenciesMap.get(favoriteId),
+                                ratesMap.get(favoriteId).getCurOfficialRate());
 
-                    favoriteCurrencyAndRate.add(currencyAndRate);
-                }
+                        CurrencyNameAndRateValue currencyNameAndRateValue =
+                                currencyListDisplayer.showCurrencyAndRate(currencyAndRate);
 
-//                for (Map.Entry<Integer, Rate> entry : ratesMap.entrySet()) {
-//                    for ( int favoriteId : favoriteCurrenciesId ) {
-//                        if (favoriteId == entry.getKey()){
-//                            currencyAndRate= new CurrencyAndRate(currenciesMap.get(entry.getKey()),
-//                                    entry.getValue().getCurOfficialRate());
-//                        }
-//                    }
-//
-//                }
+                        favoriteCurrencyAndRate.add(currencyNameAndRateValue);
+                    }
 
                 FavoriteCurrencyUpdateFLow favoriteCurrencyUpdateFLow = new FavoriteCurrencyUpdateFLow();
                 favoriteCurrencyUpdateFLow.runUpdateFlow(favoriteCurrencyAndRate);
@@ -96,16 +94,12 @@ public class FavoriteCurrenciesUpdateService {
     }
 
     private Observable<List<Rate>> getRates (){
-
-        NBRBService service = CurrenciesApplication.getApi();
         return service.getRatesForToday()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<List<Currency>> getCurrenciesList () {
-        NBRBService service = CurrenciesApplication.getApi();
-
         return service.getCurrencies()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());

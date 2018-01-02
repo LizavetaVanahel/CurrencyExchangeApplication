@@ -33,7 +33,6 @@ import com.example.vanahel.currencyexchangeapplication.util.pushnotservice.PushN
 public class HomeActivity extends AppCompatActivity
         implements OnNavigationItemSelectedListener {
 
-    private static final String TAG = "MainActivity";
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -41,7 +40,6 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(id.toolbar);setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(id.home_activity);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,7 +50,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         displayView(id.major_currency_rate);
 
         CurrencyUpdateScheduler.scheduleJob(this);
@@ -62,7 +59,6 @@ public class HomeActivity extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
 
                 String currency = intent.getStringExtra("currency");
-
                 Bundle bundle = new Bundle();
                 bundle.putString("currency", currency);
                 CurrencyGraphicFragment currencyGraphicFragment = new CurrencyGraphicFragment();
@@ -70,7 +66,6 @@ public class HomeActivity extends AppCompatActivity
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(id.content_frame, currencyGraphicFragment);
                 ft.commit();
-
             }
         };
 
@@ -139,8 +134,6 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new AboutAppFragment();
                 title = this.getString(string.about_app_title);
                 break;
-
-
         }
 
         if (fragment != null) {
@@ -148,8 +141,6 @@ public class HomeActivity extends AppCompatActivity
             ft.replace(id.content_frame, fragment);
             ft.commit();
         }
-
-
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);

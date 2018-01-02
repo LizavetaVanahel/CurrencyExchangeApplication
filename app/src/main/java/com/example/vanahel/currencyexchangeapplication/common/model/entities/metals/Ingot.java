@@ -10,120 +10,120 @@ public class Ingot {
     private String date;
     @SerializedName("MetalID")
     @Expose
-    private Integer metalID;
+    private int metalID;
     @SerializedName("Nominal")
     @Expose
-    private Double nominal;
+    private double nominal;
     @SerializedName("NoCertificateDollars")
     @Expose
     private Object noCertificateDollars;
     @SerializedName("NoCertificateRubles")
     @Expose
-    private Double noCertificateRubles;
+    private double noCertificateRubles;
     @SerializedName("CertificateDollars")
     @Expose
     private Object certificateDollars;
     @SerializedName("CertificateRubles")
     @Expose
-    private Double certificateRubles;
+    private double certificateRubles;
     @SerializedName("BanksDollars")
     @Expose
     private Object banksDollars;
     @SerializedName("BanksRubles")
     @Expose
-    private Double banksRubles;
+    private double banksRubles;
     @SerializedName("EntitiesDollars")
     @Expose
     private Object entitiesDollars;
     @SerializedName("EntitiesRubles")
     @Expose
-    private Double entitiesRubles;
+    private double entitiesRubles;
 
     public String getDate() {
-        return this.date;
+        return date;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
 
-    public Integer getMetalID() {
-        return this.metalID;
+    public int getMetalID() {
+        return metalID;
     }
 
-    public void setMetalID(Integer metalID) {
+    public void setMetalID(int metalID) {
         this.metalID = metalID;
     }
 
-    public Double getNominal() {
-        return this.nominal;
+    public double getNominal() {
+        return nominal;
     }
 
-    public void setNominal(Double nominal) {
+    public void setNominal(double nominal) {
         this.nominal = nominal;
     }
 
     public Object getNoCertificateDollars() {
-        return this.noCertificateDollars;
+        return noCertificateDollars;
     }
 
     public void setNoCertificateDollars(Object noCertificateDollars) {
         this.noCertificateDollars = noCertificateDollars;
     }
 
-    public Double getNoCertificateRubles() {
-        return this.noCertificateRubles;
+    public double getNoCertificateRubles() {
+        return noCertificateRubles;
     }
 
-    public void setNoCertificateRubles(Double noCertificateRubles) {
+    public void setNoCertificateRubles(double noCertificateRubles) {
         this.noCertificateRubles = noCertificateRubles;
     }
 
     public Object getCertificateDollars() {
-        return this.certificateDollars;
+        return certificateDollars;
     }
 
     public void setCertificateDollars(Object certificateDollars) {
         this.certificateDollars = certificateDollars;
     }
 
-    public Double getCertificateRubles() {
-        return this.certificateRubles;
+    public double getCertificateRubles() {
+        return certificateRubles;
     }
 
-    public void setCertificateRubles(Double certificateRubles) {
+    public void setCertificateRubles(double certificateRubles) {
         this.certificateRubles = certificateRubles;
     }
 
     public Object getBanksDollars() {
-        return this.banksDollars;
+        return banksDollars;
     }
 
     public void setBanksDollars(Object banksDollars) {
         this.banksDollars = banksDollars;
     }
 
-    public Double getBanksRubles() {
-        return this.banksRubles;
+    public double getBanksRubles() {
+        return banksRubles;
     }
 
-    public void setBanksRubles(Double banksRubles) {
+    public void setBanksRubles(double banksRubles) {
         this.banksRubles = banksRubles;
     }
 
     public Object getEntitiesDollars() {
-        return this.entitiesDollars;
+        return entitiesDollars;
     }
 
     public void setEntitiesDollars(Object entitiesDollars) {
         this.entitiesDollars = entitiesDollars;
     }
 
-    public Double getEntitiesRubles() {
-        return this.entitiesRubles;
+    public double getEntitiesRubles() {
+        return entitiesRubles;
     }
 
-    public void setEntitiesRubles(Double entitiesRubles) {
+    public void setEntitiesRubles(double entitiesRubles) {
         this.entitiesRubles = entitiesRubles;
     }
 

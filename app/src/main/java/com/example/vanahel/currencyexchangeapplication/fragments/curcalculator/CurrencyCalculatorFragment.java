@@ -2,11 +2,9 @@ package com.example.vanahel.currencyexchangeapplication.fragments.curcalculator;
 
 import android.R.layout;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.vanahel.currencyexchangeapplication.R;
-import com.example.vanahel.currencyexchangeapplication.R.drawable;
 import com.example.vanahel.currencyexchangeapplication.R.id;
 import com.example.vanahel.currencyexchangeapplication.common.model.entities.currencies.CurrencyAndRate;
 import com.example.vanahel.currencyexchangeapplication.common.view.CurrencyListView;
@@ -51,50 +48,43 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
     private CurrencyListDisplayer currencyListDisplayer;
     private  final StatusDTO statusDTO = new StatusDTO();
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.currency_calculator_fragment, container, false);
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+        View view = inflater.inflate( R.layout.currency_calculator_fragment, container, false );
         ButterKnife.bind(this, view);
 
         CurrencyListProvider currencyListProvider = new CurrencyListProvider(this);
-        currencyListProvider.getCurrencies();
+        currencyListProvider.provideCurrencyList();
 
         currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
         currencyCalculatorPresenter = new CurrencyCalculatorPresenter(this);
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        calculateButton.setOnClickListener(new OnClickListener() {
+        calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!editText.getText().toString().isEmpty()) {
                     valueToExchange = editText.getText().toString();
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                    currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange,
+                            statusDTO.getStatus() );
                 } else {
-                    Toast.makeText(getActivity(), "please, enter value to exchange", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Please, enter value to exchange",
+                            Toast.LENGTH_LONG).show();
 
                 }
             }
 
         });
 
-        spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerTo.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected( AdapterView<?> parent, View view, int position, long id ) {
                 currencyToAbb = currencyAbbs.get(position);
-                if (!editText.getText().toString().isEmpty()) {
+                if ( !editText.getText().toString().isEmpty() ) {
                     valueToExchange = editText.getText().toString();
                 } else {
-                    Toast.makeText(getActivity(), "please, enter value to exchange", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(getActivity(), "Please, enter value to exchange",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -104,50 +94,49 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
             }
         });
 
-        exchangeButton.setOnClickListener(new OnClickListener() {
+        exchangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (statusDTO.getStatus() == 0) {
-                    exchangeButton.setCompoundDrawablesWithIntrinsicBounds(drawable.icon_arrow_left, 0, 0, 0);
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                if ( statusDTO.getStatus() == 0 ) {
+                    exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_left,
+                            0, 0, 0 );
+                    currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange,
+                            statusDTO.getStatus() );
                     statusDTO.setStatus(1);
                 } else {
-                    exchangeButton.setCompoundDrawablesWithIntrinsicBounds(drawable.icon_arrow_right, 0, 0, 0);
-                    currencyCalculatorPresenter.getRateByAbb(currencyToAbb, valueToExchange, statusDTO.getStatus());
+                    exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_right,
+                            0, 0, 0 );
+                    currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange,
+                            statusDTO.getStatus() );
                     statusDTO.setStatus(0);
                 }
             }
 
         });
 
-    }
-
-
-    @Override
-    public void showCalculatedRate(Double result) {
-        resultTextView.setText(result.toString());
-
+        return view;
     }
 
     @Override
-    public void showError(String error) {
+    public void showCalculatedRate( Double result ) {
+        resultTextView.setText( result.toString() );
 
     }
 
     @Override
-    public void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates) {
+    public void showCurrencyAndRate( List<CurrencyAndRate> currenciesAndRates ) {
 
         List<String> currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
 
         currencyAbbs = new ArrayList<>();
 
         for ( CurrencyAndRate currencyAndRate : currenciesAndRates ) {
-            currencyAbbs.add(currencyAndRate.getCurrency().getCurAbbreviation());
+            currencyAbbs.add( currencyAndRate.getCurrency().getCurAbbreviation() );
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 layout.simple_spinner_item, currencyNameList);
-        adapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource( layout.simple_spinner_dropdown_item );
         spinnerTo.setAdapter(adapter);
     }
 

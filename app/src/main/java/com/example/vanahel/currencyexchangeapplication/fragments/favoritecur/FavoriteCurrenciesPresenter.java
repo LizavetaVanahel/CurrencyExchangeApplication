@@ -18,18 +18,17 @@ import io.reactivex.schedulers.Schedulers;
 public class FavoriteCurrenciesPresenter {
 
     private final FavoriteCurrenciesView favoriteCurrenciesView;
+    private NBRBService service;
 
-    public FavoriteCurrenciesPresenter (FavoriteCurrenciesView favoriteCurrenciesView){
+    public FavoriteCurrenciesPresenter ( FavoriteCurrenciesView favoriteCurrenciesView ){
         this.favoriteCurrenciesView = favoriteCurrenciesView;
+        service = CurrenciesApplication.getApi();
     }
 
-    public void getFavoriteCurrencyRate (Integer currencyId){
-
+    public void getFavoriteCurrencyRate (int currencyId){
 
         Observable<Rate> rate = getRate(currencyId);
-
         Observable<Currency> currency = getCurrency(currencyId);
-
         Observable<CurrencyAndRate> combined = Observable.zip(currency, rate,
                 new BiFunction<Currency, Rate,  CurrencyAndRate>() {
                     @Override
@@ -64,17 +63,13 @@ public class FavoriteCurrenciesPresenter {
 
     }
 
-    private Observable<Rate> getRate (Integer rateId){
-
-        NBRBService service = CurrenciesApplication.getApi();
+    private Observable<Rate> getRate (int rateId){
         return service.getRate(rateId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private Observable<Currency> getCurrency (Integer rateId){
-
-        NBRBService service = CurrenciesApplication.getApi();
+    private Observable<Currency> getCurrency (int rateId){
         return service.getCurrency(rateId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());

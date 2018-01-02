@@ -12,7 +12,8 @@ import com.example.vanahel.currencyexchangeapplication.fragments.favoritecur.Fav
 import java.util.ArrayList;
 import java.util.List;
 
-public class AsyncTaskLoaderCallbacks implements LoaderManager.LoaderCallbacks<AsyncTaskResult<List<CurrencyNameAndRateValue>>> {
+public class AsyncTaskLoaderCallbacks implements
+        LoaderManager.LoaderCallbacks<AsyncTaskResult<List<CurrencyNameAndRateValue>>> {
 
     private Activity activity;
     private CurrencyDao currencyDao;

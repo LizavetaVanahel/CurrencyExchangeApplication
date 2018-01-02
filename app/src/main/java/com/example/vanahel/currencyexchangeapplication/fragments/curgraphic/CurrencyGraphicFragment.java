@@ -47,37 +47,37 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
     private CurrencyGraphicPresenter currencyGraphicPresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.currency_graphics_fragment, container, false);
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
+        View view = inflater.inflate( R.layout.currency_graphics_fragment, container, false );
         ButterKnife.bind(this, view);
 
-        currencyListDisplayer = new CurrencyListDisplayer(getActivity());
+        currencyListDisplayer = new CurrencyListDisplayer( getActivity() );
 
         CurrencyListProvider currencyListProvider = new CurrencyListProvider(this);
-        currencyListProvider.getCurrencies();
+        currencyListProvider.provideCurrencyList();
 
         currencyGraphicPresenter = new CurrencyGraphicPresenter(this);
 
-        periods = getResources().getStringArray(array.graphicPeriod);
+        periods = getResources().getStringArray( array.graphicPeriod );
         ArrayAdapter<String> spinnerPeriodAdapter =
-                new ArrayAdapter<>(getActivity(), layout.simple_spinner_dropdown_item,
-                        periods);
-        periodSpinner.setAdapter(spinnerPeriodAdapter);
-        spinnerPeriodAdapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
+                new ArrayAdapter<>( getActivity(), layout.simple_spinner_dropdown_item,
+                        periods );
+        periodSpinner.setAdapter( spinnerPeriodAdapter );
+        spinnerPeriodAdapter.setDropDownViewResource( layout.simple_spinner_dropdown_item );
 
-        periodSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        periodSpinner.setOnItemSelectedListener( new OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected( AdapterView<?> parent, View view, int position, long id)  {
                 String selectedPeriod = periods[position];
-                if (selectedPeriod.contains("3")) {
+                if ( selectedPeriod.contains("3") ) {
                     periodForGraphic = 3;
-                } else if (selectedPeriod.contains("6")) {
+                } else if ( selectedPeriod.contains("6") ) {
                     periodForGraphic = 6;
-                } else if (selectedPeriod.contains("12")) {
+                } else if ( selectedPeriod.contains("12") ) {
                     periodForGraphic = 12;
                 }
 
-                currencyGraphicPresenter.getCurrency(curId, periodForGraphic);
+                currencyGraphicPresenter.getCurrency( curId, periodForGraphic );
 
             }
 
@@ -88,13 +88,12 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
         });
 
         graphicDrawer = new GraphicDrawer(chart);
-
         return view;
     }
 
 
     @Override
-    public void showGraphic(Map<Integer, Float> rateDynamics) {
+    public void showGraphic( Map<Integer, Float> rateDynamics ) {
         graphicDrawer.drawGraphic(rateDynamics);
     }
 
@@ -105,17 +104,17 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
     }
 
     @Override
-    public void showCurrencyAndRate(List<CurrencyAndRate> currenciesAndRates) {
+    public void showCurrencyAndRate( List<CurrencyAndRate> currenciesAndRates ) {
 
         currencyIds = new ArrayList<>();
         List<String> currencyNameList;
 
         for ( CurrencyAndRate currencyAndRate : currenciesAndRates ) {
-            currencyIds.add(currencyAndRate.getCurrency().getCurID());
+            currencyIds.add( currencyAndRate.getCurrency().getCurID() );
         }
 
 
-        if (getArguments() != null) {
+        if ( getArguments() != null ) {
             String myValue = getArguments().getString("currency");
             currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
             currencyNameList.add(0,myValue);
@@ -123,18 +122,17 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
             currencyNameList = currencyListDisplayer.showCurrencyList(currenciesAndRates);
         }
 
-
         ArrayAdapter<String> currenciesAdapter = new ArrayAdapter<>(getActivity(),
                 layout.simple_spinner_item, currencyNameList);
 
-            currenciesAdapter.setDropDownViewResource(layout.simple_spinner_dropdown_item);
+            currenciesAdapter.setDropDownViewResource( layout.simple_spinner_dropdown_item );
             currenciesSpinner.setAdapter(currenciesAdapter);
 
-            currenciesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            currenciesSpinner.setOnItemSelectedListener( new OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemSelected( AdapterView<?> parent, View view, int position, long id ) {
                     curId = currencyIds.get(position);
-                    currencyGraphicPresenter.getCurrency(curId, periodForGraphic);
+                    currencyGraphicPresenter.getCurrency( curId, periodForGraphic );
 
                 }
 
@@ -144,6 +142,5 @@ public class CurrencyGraphicFragment extends Fragment implements CurrencyGraphic
                 }
             });
         }
-
     }
 

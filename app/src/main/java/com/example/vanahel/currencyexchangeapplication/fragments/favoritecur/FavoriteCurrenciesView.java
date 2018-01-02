@@ -4,8 +4,6 @@ import com.example.vanahel.currencyexchangeapplication.common.model.entities.cur
 
 public interface FavoriteCurrenciesView  {
 
-    void showError(String error);
-
-    void showSelectedCurrencyAndRate (CurrencyAndRate currencyAndRate);
+    void showSelectedCurrencyAndRate ( CurrencyAndRate currencyAndRate );
 
 }

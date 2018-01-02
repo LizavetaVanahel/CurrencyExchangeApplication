@@ -29,7 +29,7 @@ public class GraphicDrawer {
         this.chart = chart;
     }
 
-    public void drawGraphic(Map<Integer, Float> rateDynamics){
+    public void drawGraphic( Map<Integer, Float> rateDynamics ){
 
         chart.getDescription().setText("This is testing Description");
         chart.setDrawGridBackground(true);
@@ -56,23 +56,23 @@ public class GraphicDrawer {
         });
         CombinedData data = new CombinedData();
 
-        data.setData(generateLineData(rateDynamics));
-        data.setData(generateBarData(rateDynamics));
+        data.setData( generateLineData(rateDynamics) );
+        data.setData( generateBarData(rateDynamics) );
 
 
-        xAxis.setAxisMaximum(data.getXMax() + 0.25f);
+        xAxis.setAxisMaximum( data.getXMax() + 0.25f );
         chart.setData(data);
         chart.invalidate();
 
     }
 
-    private LineData generateLineData(Map<Integer, Float> rateDynamics) {
+    private LineData generateLineData( Map<Integer, Float> rateDynamics ) {
 
         LineData d = new LineData();
 
         ArrayList<Entry> entries = new ArrayList<>();
 
-        entries = getLineEntriesData(entries, rateDynamics);
+        entries = getLineEntriesData( entries, rateDynamics );
 
         LineDataSet set = new LineDataSet(entries, "");
         set.setColor(Color.rgb(240, 238, 70));
@@ -90,10 +90,10 @@ public class GraphicDrawer {
         return d;
     }
 
-    private BarData generateBarData(Map<Integer, Float> rateDynamics) {
+    private BarData generateBarData( Map<Integer, Float> rateDynamics ) {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries = getBarEntries(entries, rateDynamics);
+        entries = getBarEntries( entries, rateDynamics );
 
         BarDataSet set1 = new BarDataSet(entries, "");
         set1.setColors(ColorTemplate.LIBERTY_COLORS);
@@ -103,33 +103,30 @@ public class GraphicDrawer {
 
         float barWidth = 0.45f;
 
-
         BarData d = new BarData(set1);
         d.setBarWidth(barWidth);
-
 
         return d;
     }
 
-    private ArrayList<Entry> getLineEntriesData(ArrayList<Entry> entries, Map<Integer, Float> rateDynamics){
+    private ArrayList<Entry> getLineEntriesData( ArrayList<Entry> entries, Map<Integer, Float> rateDynamics ){
 
-        for (Map.Entry<Integer, Float> rateDynamic : rateDynamics.entrySet())
+        for ( Map.Entry<Integer, Float> rateDynamic : rateDynamics.entrySet() )
         {
-            entries.add(new Entry(rateDynamic.getKey(), rateDynamic.getValue()));
+            entries.add( new Entry(rateDynamic.getKey(), rateDynamic.getValue()) );
         }
 
         return entries;
     }
 
-    private ArrayList<BarEntry> getBarEntries(ArrayList<BarEntry> entries, Map<Integer, Float> rateDynamics) {
+    private ArrayList<BarEntry> getBarEntries( ArrayList<BarEntry> entries, Map<Integer, Float> rateDynamics ) {
 
-        for (Map.Entry<Integer, Float> rateDynamic : rateDynamics.entrySet())
+        for ( Map.Entry<Integer, Float> rateDynamic : rateDynamics.entrySet() )
         {
-            entries.add(new BarEntry(rateDynamic.getKey(), rateDynamic.getValue()));
+            entries.add( new BarEntry(rateDynamic.getKey(), rateDynamic.getValue()) );
         }
 
         return entries;
-
     }
 
     private final String[] mMonths = {

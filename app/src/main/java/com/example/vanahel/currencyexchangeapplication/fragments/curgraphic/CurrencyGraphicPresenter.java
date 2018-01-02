@@ -23,11 +23,11 @@ public class CurrencyGraphicPresenter {
 
     private final CurrencyGraphicView currencyGraphicView;
 
-    public CurrencyGraphicPresenter (CurrencyGraphicView currencyGraphicView){
+    public CurrencyGraphicPresenter ( CurrencyGraphicView currencyGraphicView ){
         this.currencyGraphicView = currencyGraphicView;
     }
 
-    public void getCurrency(int rateId, int months){
+    public void getCurrency( int rateId, int months ){
 
         String startDate = startDateProvider(months);
         String endDate = endDateProvider();
@@ -49,8 +49,8 @@ public class CurrencyGraphicPresenter {
                         } else {
                             Map<Integer, Float> rateDynamics = new TreeMap<>();
                             for ( Rate rate : rates ) {
-                                int month = getMonthFromDate(rate.getDate());
-                                rateDynamics.put(month, rate.getCurOfficialRate().floatValue());
+                                int month = getMonthFromDate( rate.getDate() );
+                                rateDynamics.put( month, (float)rate.getCurOfficialRate());
                             }
 
                             currencyGraphicView.showGraphic(rateDynamics);
@@ -70,29 +70,25 @@ public class CurrencyGraphicPresenter {
 
     }
 
-    private String startDateProvider (int monthes){
+    private String startDateProvider (int months){
 
         Calendar c = new GregorianCalendar();
         c.setTime(new Date());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-d", Locale.US);
-        c.add(Calendar.MONTH, -monthes +1);
-
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-d", Locale.US );
+        c.add(Calendar.MONTH, -months +1);
         return sdf.format(c.getTime());
 
     }
 
     private String endDateProvider (){
-
         Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-d", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-d", Locale.US );
         return sdf.format(d.getTime());
 
     }
 
     private int getMonthFromDate (String date){
-
         String str[] = date.split("-");
-
         return Integer.parseInt(str[1]);
     }
 

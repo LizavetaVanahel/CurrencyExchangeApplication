@@ -18,28 +18,27 @@ public class IngotsRecyclerViewAdapter extends Adapter<ViewHolder> {
 
     private final List<MetalNameAndIngotValue> metalNameAndIngotValueList;
 
-    public IngotsRecyclerViewAdapter(List<MetalNameAndIngotValue> metalNameAndIngotValueList) {
+    public IngotsRecyclerViewAdapter( List<MetalNameAndIngotValue> metalNameAndIngotValueList ) {
         this.metalNameAndIngotValueList = metalNameAndIngotValueList;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(layout.metals_list_item, viewGroup, false);
+    public ViewHolder onCreateViewHolder( ViewGroup viewGroup, int i ) {
+        View v = LayoutInflater.from( viewGroup.getContext() ).inflate( layout.metals_list_item, viewGroup, false );
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder( ViewHolder viewHolder, int i ) {
         MetalNameAndIngotValue metalNameAndIngotValue = metalNameAndIngotValueList.get(i);
-
-        viewHolder.name.setText(metalNameAndIngotValue.getMetalName());
-        viewHolder.nominal.setText(metalNameAndIngotValue.getNominal().toString());
-        viewHolder.rate.setText(metalNameAndIngotValue.getPrice().toString());
+        viewHolder.name.setText( metalNameAndIngotValue.getMetalName() );
+        viewHolder.nominal.setText( Double.valueOf(metalNameAndIngotValue.getNominal()).toString() );
+        viewHolder.rate.setText( Double.valueOf(metalNameAndIngotValue.getPrice()).toString() );
     }
 
     @Override
     public int getItemCount() {
-        return this.metalNameAndIngotValueList.size();
+        return metalNameAndIngotValueList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,9 +48,9 @@ public class IngotsRecyclerViewAdapter extends Adapter<ViewHolder> {
 
         private ViewHolder(View itemView) {
             super(itemView);
-            this.name = (TextView) itemView.findViewById(id.metal_name);
-            this.rate = (TextView) itemView.findViewById(id.metal_rate);
-            this.nominal = (TextView) itemView.findViewById(id.metal_scale);
+            name = (TextView) itemView.findViewById(id.metal_name);
+            rate = (TextView) itemView.findViewById(id.metal_rate);
+            nominal = (TextView) itemView.findViewById(id.metal_scale);
         }
     }
 }
