@@ -12,7 +12,7 @@ import java.util.TimeZone;
 
 public class ExecutionWindowCalculator {
 
-    public long calculateExecutionWindow (int timeToSet){
+    public int calculateExecutionWindow (int timeToSet){
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
@@ -33,7 +33,7 @@ public class ExecutionWindowCalculator {
 
         long timeToSetTimeInMil = dateToSet.getTime();
 
-        return timeToSetTimeInMil - currentTimeInMillis;
+        return (int) (timeToSetTimeInMil - currentTimeInMillis);
 
     }
 }

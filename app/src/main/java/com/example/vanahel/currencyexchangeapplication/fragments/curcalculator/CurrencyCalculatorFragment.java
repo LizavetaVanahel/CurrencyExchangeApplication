@@ -99,7 +99,6 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
         exchangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( !editText.getText().toString().isEmpty() ) {
                     if ( statusDTO.getStatus() == 0 ) {
                         exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_left,
                             0, 0, 0 );
@@ -108,10 +107,6 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
                     exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_right,
                             0, 0, 0 );
                     statusDTO.setStatus(0);
-                }
-                } else {
-                    Toast.makeText(getActivity(), "Please, enter value to exchange",
-                            Toast.LENGTH_LONG).show();
                 }
             }
 

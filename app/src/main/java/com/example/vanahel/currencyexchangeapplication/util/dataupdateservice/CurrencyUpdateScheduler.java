@@ -24,13 +24,16 @@ public class CurrencyUpdateScheduler  {
 
     public static Job createJob(FirebaseJobDispatcher dispatcher){
 
+        ExecutionWindowCalculator executionWindowCalculator = new ExecutionWindowCalculator();
+        int updateTime = executionWindowCalculator.calculateExecutionWindow(12);
+
         Job job = dispatcher.newJobBuilder()
                 .setLifetime(Lifetime.FOREVER)
                 .setService(CurrencyJobService.class)
                 .setTag("CurrencyAppTag")
                 .setReplaceCurrent(false)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(10, 20))
+                .setTrigger(Trigger.executionWindow(updateTime, updateTime + 60))
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 .setConstraints(Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING)
                 .build();
