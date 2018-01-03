@@ -46,7 +46,7 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
     private String valueToExchange;
     private List<String> currencyAbbs;
     private CurrencyListDisplayer currencyListDisplayer;
-    private  final StatusDTO statusDTO = new StatusDTO();
+    private final StatusDTO statusDTO = new StatusDTO();
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState ) {
@@ -59,6 +59,8 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
         currencyListDisplayer = new CurrencyListDisplayer(getActivity());
 
         currencyCalculatorPresenter = new CurrencyCalculatorPresenter(this);
+
+        statusDTO.setStatus(1);
 
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,18 +99,19 @@ public class CurrencyCalculatorFragment extends Fragment implements CurrencyCalc
         exchangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( statusDTO.getStatus() == 0 ) {
-                    exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_left,
+                if ( !editText.getText().toString().isEmpty() ) {
+                    if ( statusDTO.getStatus() == 0 ) {
+                        exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_left,
                             0, 0, 0 );
-                    currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange,
-                            statusDTO.getStatus() );
                     statusDTO.setStatus(1);
                 } else {
                     exchangeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.icon_arrow_right,
                             0, 0, 0 );
-                    currencyCalculatorPresenter.getRateByAbb( currencyToAbb, valueToExchange,
-                            statusDTO.getStatus() );
                     statusDTO.setStatus(0);
+                }
+                } else {
+                    Toast.makeText(getActivity(), "Please, enter value to exchange",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
