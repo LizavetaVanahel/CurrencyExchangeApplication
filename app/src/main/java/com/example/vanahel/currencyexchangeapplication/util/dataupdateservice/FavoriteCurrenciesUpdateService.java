@@ -72,6 +72,7 @@ public class FavoriteCurrenciesUpdateService {
                         CurrencyNameAndRateValue currencyNameAndRateValue =
                                 currencyListDisplayer.showCurrencyAndRate(currencyAndRate);
 
+                        currencyNameAndRateValue.setId(currencyAndRate.getId());
                         favoriteCurrencyAndRate.add(currencyNameAndRateValue);
                     }
 

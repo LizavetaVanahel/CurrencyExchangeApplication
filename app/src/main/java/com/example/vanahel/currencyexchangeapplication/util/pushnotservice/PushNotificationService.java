@@ -23,7 +23,7 @@ public class PushNotificationService  {
     public void sendNotification( Context context, String currency, Double priceFallRate ) {
 
         String title = currency + " has fallen in price";
-        String body = currency + " was down " + priceFallRate + " dollar";
+        String body = currency + " was down to " + priceFallRate;
 
         Intent intent = new Intent(context, HomeActivity.class);
         intent.putExtra(BROADCAST_RECEIVER_INTENT, "brodcastreceiver");
@@ -31,8 +31,9 @@ public class PushNotificationService  {
         intent.putExtra("description", body);
         intent.putExtra("currency", currency);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        int num = (int) System.currentTimeMillis();
         PendingIntent pendingIntent =
-                PendingIntent.getActivity( context, 0, intent, PendingIntent.FLAG_ONE_SHOT );
+                PendingIntent.getActivity( context, num, intent, PendingIntent.FLAG_ONE_SHOT );
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
@@ -46,7 +47,7 @@ public class PushNotificationService  {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(num, notificationBuilder.build());
     }
 
 }
