@@ -24,22 +24,25 @@ public class CurrencyUpdateScheduler  {
 
     public static Job createJob(FirebaseJobDispatcher dispatcher){
 
+        ExecutionWindowCalculator executionWindowCalculator = new ExecutionWindowCalculator();
+        int updateTime = executionWindowCalculator.calculateExecutionWindow(12);
+
         Job job = dispatcher.newJobBuilder()
                 .setLifetime(Lifetime.FOREVER)
                 .setService(CurrencyJobService.class)
                 .setTag("CurrencyAppTag")
                 .setReplaceCurrent(false)
                 .setRecurring(true)
-                .setTrigger(Trigger.executionWindow(10, 20))
-                .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
-                .setConstraints(Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING)
+                .setTrigger( Trigger.executionWindow( updateTime, updateTime + 20 ))
+                .setRetryStrategy( RetryStrategy.DEFAULT_LINEAR )
+                .setConstraints( Constraint.ON_ANY_NETWORK, Constraint.DEVICE_CHARGING )
                 .build();
         return job;
     }
 
     public void cancelJob(Context context){
 
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher( new GooglePlayDriver(context) );
         dispatcher.cancelAll();
         dispatcher.cancel("CurrencyAppTag");
 

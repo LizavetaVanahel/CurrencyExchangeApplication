@@ -9,7 +9,6 @@ import com.firebase.jobdispatcher.JobService;
 
 public class CurrencyJobService extends JobService {
 
-    private static final String TAG = CurrencyJobService.class.getSimpleName();
     private FavoriteCurrenciesUpdateService favoriteCurrenciesUpdateService;
 
     @Override

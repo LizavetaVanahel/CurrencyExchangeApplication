@@ -18,8 +18,10 @@ public class FavoriteCurrencyUpdateFLow {
 
     public void runUpdateFlow ( List<CurrencyNameAndRateValue> favoriteCurrencyAndRate ){
 
-        sendNotification(favoriteCurrencyAndRate);
-        save(favoriteCurrencyAndRate);
+        if (favoriteCurrencyAndRate.size() != 0) {
+            sendNotification(favoriteCurrencyAndRate);
+            save(favoriteCurrencyAndRate);
+        }
 
     }
 
